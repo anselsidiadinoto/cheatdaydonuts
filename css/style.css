@@ -1,0 +1,210 @@
+/* 
+
+--- 01 TYPOGRAPHY SYSTEM
+
+- Font sizes (px)
+10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+
+- Font weights
+Default: 1
+
+
+
+--- 02 COLORS
+
+Primary: 
+Main Background Color: #F5EFEF
+Text color 1: #C9191F
+
+Tints:
+Shades: 
+Greys:
+
+--- 05 SHADOWS
+
+--- 06 BORDER-RADIUS
+
+--- 07 WHITESPACE
+
+- SPACING SYSTEM (px)
+2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
+
+*/
+
+:root {
+  --clr-background: #f5efef;
+  --clr-text-red: #c9191f;
+  --clr-text-red-lighter: #cfb7b8;
+  --clr-text-red-hover: #d48285;
+}
+
+a {
+  text-decoration: none;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Oswald", sans-serif;
+  line-height: 1;
+  font-weight: 400;
+  color: var(--clr-text-red);
+  background-color: var(--clr-background);
+}
+
+.container {
+  max-width: 84rem;
+  margin: 0 auto;
+  /* background-color: aquamarine; */
+}
+
+.header-logo {
+  /* background-color: blueviolet; */
+  width: 100%;
+  padding: 8rem;
+}
+
+.navigation {
+  font-size: 2.7rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  /* flex-grow: 0; */
+  padding-top: 5rem;
+  padding-bottom: 1rem;
+}
+
+.navigation p {
+  color: var(--clr-text-red-lighter);
+  font-size: 1em;
+  font-weight: 200;
+}
+
+.navigation-link:link,
+.navigation-link:visited {
+  color: var(--clr-text-red);
+}
+
+.navigation-link:hover,
+.navigation-link:active {
+  color: var(--clr-text-red-hover);
+}
+
+.link-about_us {
+  font-weight: 700;
+}
+
+.link-order {
+  font-weight: 300;
+}
+
+.text-main {
+  font-size: 1.8rem;
+  font-weight: 200;
+  line-height: 2.2rem;
+}
+
+/* section-description */
+
+.description-content {
+  font-size: 2.5rem;
+  line-height: 1.3;
+  font-weight: 200;
+  color: var(--clr-text-red);
+  padding-bottom: 12rem;
+}
+
+/* ---- ORDER PAGE ---- */
+
+/* 
+.order-info-layout {
+  display: flex;
+}
+
+.order-info-logo-box {
+  display: flex;
+  background-color: orange;
+  flex-grow: 0;
+
+}
+
+.order-info-logo {
+  width: 30rem;
+  padding: 4rem;
+
+}
+
+.order-info-description-box {
+  display: flex;
+  flex-grow: 1;
+  background-color: rgb(197, 142, 197);
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.delivery-date-box {
+  background-color: #d48285;
+  flex-grow: 1;
+}
+
+.order-info-description {
+  flex-grow: 1;
+  background-color: rgb(82, 131, 115);
+} */
+
+.order-info-logo {
+  width: 100%;
+  padding: 4rem;
+}
+
+.order-info-logo-box {
+  grid-area: logo;
+  /* background-color: bisque; */
+}
+
+.delivery-date-description {
+  grid-area: date-text;
+  align-self: center;
+  /* background-color: #d48285; */
+}
+
+.delivery-date-box {
+  grid-area: date-info;
+  background-color: white;
+  border-radius: 2rem;
+  margin: 0.5rem;
+  display: grid;
+}
+
+.delivery-date-text {
+  align-self: center;
+  /* display: grid; */
+}
+
+.order-description-info {
+  grid-area: order-info;
+  align-self: center;
+  justify-self: center;
+
+  /* background-color: aqua; */
+}
+
+.order-info-layout {
+  display: grid;
+  /* background-color: #cfb7b8; */
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 12rem 12rem;
+  grid-template-areas:
+    "logo date-text date-info"
+    "logo order-info order-info";
+}
