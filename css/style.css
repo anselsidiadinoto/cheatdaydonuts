@@ -183,12 +183,25 @@ body {
   background-color: white;
   border-radius: 2rem;
   margin: 0.5rem;
-  display: grid;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.delivery-date-text {
-  align-self: center;
+.delivery-date-text .day,
+.delivery-date-text .date {
+  display: flex;
+  justify-content: center;
+
+  font-size: 3rem;
+  /* margin: 2rem; */
   /* display: grid; */
+}
+
+.delivery-date-text .date {
+  padding-top: 1.5rem;
+  font-weight: 400;
 }
 
 .order-description-info {
@@ -232,7 +245,6 @@ body {
   /* width: 100%; */
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 5rem;
 
   outline-style: solid;
   outline-width: 4rem;
@@ -342,8 +354,8 @@ body {
 .subtotal-checkout-layout {
   display: flex;
   /* justify-content: space-around; */
-  margin: 3rem 3rem;
-  padding: 1rem 1.5rem;
+  margin: 1rem 3rem 3rem 3rem;
+  padding: 1.5rem 0;
   background-color: #fff;
   border-radius: 1rem;
   /* width: 100%; */
@@ -351,18 +363,35 @@ body {
 
 .subtotal-all-items {
   grid-area: all-items;
+
+  font-size: 1.5rem;
+  font-weight: 200;
 }
-.subtotal-each-price {
+
+.subtotal-all-items span {
+  font-weight: 400;
+}
+
+.subtotal-price {
   grid-area: price;
+  display: flex;
+  justify-content: end;
+
+  font-size: 1.8rem;
+  font-weight: 400;
 }
 .subtotal-each-items {
   grid-area: each-items;
+
+  font-size: 1.5rem;
+  font-weight: 200;
+  line-height: 1.2;
 }
 
 .subtotal-frame {
-  flex-grow: 1;
+  /* flex-grow: 1; */
   flex-basis: 50%;
-
+  padding: 0 1.5rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
@@ -377,10 +406,13 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  border: solid 0.15rem white;
+  border-left-color: rgb(190, 190, 190);
 }
 .checkoutbtn {
   background-color: #f5c8c9;
-  padding: 1.2rem 13rem;
+  padding: 1.2rem 14.5rem;
   border-radius: 3rem;
   border: solid 0.2rem var(--clr-text-red);
 
