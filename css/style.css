@@ -419,3 +419,194 @@ body {
   font-size: 2rem;
   font-weight: 300;
 }
+
+/* --- REVIEW ITEMS AND DELIVERIY INFORMATION --- */
+
+.general-text {
+  font-size: 1.6rem;
+  font-weight: 200;
+}
+
+.review-items-delivery-layout {
+  margin-top: 4rem;
+  display: flex;
+  width: 100%;
+}
+
+.items-delivery {
+  flex-basis: 50%;
+}
+
+/* --- Item review --- */
+
+.items-layout {
+  background-color: #fff;
+  border-radius: 1.5rem;
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+}
+
+.plus-btn {
+  grid-area: plus-btn;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.items-quantity {
+  display: flex;
+  grid-area: quantity;
+  justify-self: center;
+  align-items: center;
+
+  font-size: 1.8rem;
+  font-weight: 400;
+}
+
+.minus-btn {
+  display: flex;
+  grid-area: minus-btn;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-name {
+  grid-area: name;
+  margin-left: 1.25rem;
+
+  display: flex;
+  align-items: center;
+}
+
+.items-order button {
+  height: 1.75rem;
+  width: 1.75rem;
+  border-radius: 1rem;
+  border: solid 0.1rem #d7a0a1;
+  color: #d7a0a1;
+  background-color: #fff;
+}
+
+.items-order {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 15fr;
+  grid-template-rows: 2.5rem;
+  grid-template-areas: "plus-btn quantity minus-btn name";
+}
+
+.items-layout-subtotal {
+  padding-top: 1rem;
+  display: flex;
+}
+
+.items-subtotal-text span {
+  font-weight: 400;
+}
+
+.items-subtotal-text em {
+  font-size: 1.4rem;
+  font-style: normal;
+  color: #cf9597;
+}
+
+.items-subtotal-price {
+  display: flex;
+  flex-grow: 1;
+  justify-content: end;
+
+  font-weight: 400;
+}
+
+/* --- Delivery Information Input --- */
+
+.delivery-info-text {
+  margin: 2rem 0 1.5rem 0;
+}
+.form-full-name {
+  grid-area: name;
+  width: 100%;
+}
+
+.form-delivery-address {
+  grid-area: address;
+}
+
+.delivery-info-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-areas:
+    "name name"
+    "address address"
+    "address address"
+    "address address";
+
+  gap: 1rem;
+  margin-bottom: 8rem;
+}
+
+.delivery-info-form input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  font-family: inherit;
+  font-weight: 100;
+  padding: 0.5rem;
+}
+
+/* --- Navigation Right buttons --- */
+
+.delivery-information-nav {
+  flex-basis: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  font-size: 2rem;
+  font-weight: 200;
+  width: 100%;
+  padding-left: 6rem;
+  /* background-color: #cfb7b8; */
+}
+
+/* .continue-review-btn {
+  display: flex;
+  flex-grow: ;
+  background-color: #f5c8c9;
+  padding: 1.2rem 8rem;
+  border-radius: 3rem;
+  border: solid 0.2rem var(--clr-text-red);
+
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+.return-menu-btn {
+  background-color: none;
+  padding: 1.2rem 11rem;
+  border-radius: 3rem;
+  border: solid 0.2rem var(--clr-text-red);
+
+  font-size: 2rem;
+  font-weight: 300;
+} */
+
+.btn-frame {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+
+  padding: 1.2rem;
+  border-radius: 3rem;
+  background-color: none;
+  border: solid 0.2rem var(--clr-text-red);
+
+  /* background-color: #cfb7b8; */
+  width: 100%;
+}
+
+.btn-red {
+  background-color: rgb(253, 213, 213);
+  font-weight: 350;
+}
