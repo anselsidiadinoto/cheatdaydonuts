@@ -1,0 +1,237 @@
+<%- include('partials/admin-header') %>
+
+
+<section class="section-admin-order">
+  <div class="container">
+    <div class="admin-order-nav">
+      <div class="admin-current-order admin-btn-active">Current orders</div>
+      <div class="admin-completed-order admin-btn-inactive">
+        Completed orders
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-admin-menu-items">
+  <div class="container">
+    <div class="admin-order-container">
+      <div class="admin-order-items-component">
+        <div class="admin-order-number">1</div>
+        <div class="admin-order-item-container">
+          <div class="admin-order-delivery-information">
+            <div class="admin-order-delivery-container">
+              <div class="admin-order-delivery-name-date-items">
+                <div class="admin-order-delivery-name">Rachael Greene</div>
+                <div class="admin-order-delivery-time">
+                  14-08-2023 - 16:23:20
+                </div>
+                <div class="admin-order-delivery-items">
+                  <div>(1) Peanut Butt</div>
+                  <div>(2) Biscoff crumble</div>
+                  <div>(1) Nutella</div>
+                </div>
+              </div>
+              <div class="admin-order-delivery-notes">
+                <span>Order notes:</span>
+                <div>
+                  Please no sprinkles on the donuts, make sure everything is
+                  lactose intolerant, etc tec
+                </div>
+              </div>
+              <div class="admin-order-delivery-address">
+                <span> Delivery information : </span>
+                <div>Jl. Raya Pengosekan no. 5, Gianyar, 123456</div>
+                <div>+1 765 635 42536</div>
+                <div>rachaelgreene@gmail.com</div>
+                <div>Delivery around 13:30</div>
+              </div>
+              <div class="admin-order-delivery-price">
+                <div class="admin-order-delivery-subtotal">
+                  <div>Subtotal:</div>
+                  <div>120.000</div>
+                </div>
+                <div class="admin-order-delivery-cost">
+                  <div>Delivery cost:</div>
+                  <div><input type="text" /></div>
+                </div>
+                <div class="admin-order-delivery-total">
+                  <div>Total:</div>
+                  <span>155.000</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="admin-order-invoice">Review invoice</div>
+          <div class="admin-order-status">
+            <h4>Order Status</h4>
+            <div class="admin-order-status_finalizing-order status-grid">
+              <input type="checkbox" id="finalizing" name="finalizing" />
+              <label for="finalizing">Finalizing order</label>
+            </div>
+            <div class="admin-order-status_invoice status-grid">
+              <input type="checkbox" id="invoice" name="invoice" />
+              <label for="invoice">Invoice sent</label>
+            </div>
+            <div class="admin-order-status_payment-prepare status-grid">
+              <input type="checkbox" id="payment-prepare" name="payment-prepare" />
+              <label for="payment-prepare">Payment received and preparing order</label>
+            </div>
+            <div class="admin-order-status_delivering status-grid">
+              <input type="checkbox" id="delivering" name="delivering" />
+              <label for="delivering">Delivering order</label>
+            </div>
+            <div class="admin-order-status_complete status-grid">
+              <input type="checkbox" id="complete" name="complete" />
+              <label for="complete">Complete order</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="admin-order-items-component">
+        <div class="admin-order-number">1</div>
+        <div class="admin-order-item-container">
+          <div class="admin-order-delivery-information">
+            <div class="admin-order-delivery-container">
+              <div class="admin-order-delivery-name-date-items">
+                <div class="admin-order-delivery-name">Rachael Greene</div>
+                <div class="admin-order-delivery-time">
+                  14-08-2023 - 16:23:20
+                </div>
+                <div class="admin-order-delivery-items">
+                  <div>(1) Peanut Butt</div>
+                  <div>(2) Biscoff crumble</div>
+                  <div>(1) Nutella</div>
+                </div>
+              </div>
+              <div class="admin-order-delivery-notes">
+                <span>Order notes:</span>
+                <div>
+                  Please no sprinkles on the donuts, make sure everything is
+                  lactose intolerant, etc tec
+                </div>
+              </div>
+              <div class="admin-order-delivery-address">
+                <span> Delivery information : </span>
+                <div>Jl. Raya Pengosekan no. 5, Gianyar, 123456</div>
+                <div>+1 765 635 42536</div>
+                <div>rachaelgreene@gmail.com</div>
+                <div>Delivery around 13:30</div>
+              </div>
+              <div class="admin-order-delivery-price">
+                <div class="admin-order-delivery-subtotal">
+                  <div>Subtotal:</div>
+                  <div>120.000</div>
+                </div>
+                <div class="admin-order-delivery-cost">
+                  <div>Delivery cost:</div>
+                  <div><input type="text" /></div>
+                </div>
+                <div class="admin-order-delivery-total">
+                  <div>Total:</div>
+                  <span>155.000</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="admin-order-invoice">Review invoice</div>
+          <div class="admin-order-status">
+            <h4>Order Status</h4>
+            <div class="admin-order-status_finalizing-order status-grid">
+              <input type="checkbox" id="finalizing" name="finalizing" />
+              <label for="finalizing">Finalizing order</label>
+            </div>
+            <div class="admin-order-status_invoice status-grid">
+              <input type="checkbox" id="invoice" name="invoice" />
+              <label for="invoice">Invoice sent</label>
+            </div>
+            <div class="admin-order-status_payment-prepare status-grid">
+              <input type="checkbox" id="payment-prepare" name="payment-prepare" />
+              <label for="payment-prepare">Payment received and preparing order</label>
+            </div>
+            <div class="admin-order-status_delivering status-grid">
+              <input type="checkbox" id="delivering" name="delivering" />
+              <label for="delivering">Delivering order</label>
+            </div>
+            <div class="admin-order-status_complete status-grid">
+              <input type="checkbox" id="complete" name="complete" />
+              <label for="complete">Complete order</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="admin-order-items-component">
+        <div class="admin-order-number">1</div>
+        <div class="admin-order-item-container">
+          <div class="admin-order-delivery-information">
+            <div class="admin-order-delivery-container">
+              <div class="admin-order-delivery-name-date-items">
+                <div class="admin-order-delivery-name">Rachael Greene</div>
+                <div class="admin-order-delivery-time">
+                  14-08-2023 - 16:23:20
+                </div>
+                <div class="admin-order-delivery-items">
+                  <div>(1) Peanut Butt</div>
+                  <div>(2) Biscoff crumble</div>
+                  <div>(1) Nutella</div>
+                </div>
+              </div>
+              <div class="admin-order-delivery-notes">
+                <span>Order notes:</span>
+                <div>
+                  Please no sprinkles on the donuts, make sure everything is
+                  lactose intolerant, etc tec
+                </div>
+              </div>
+              <div class="admin-order-delivery-address">
+                <span> Delivery information : </span>
+                <div>Jl. Raya Pengosekan no. 5, Gianyar, 123456</div>
+                <div>+1 765 635 42536</div>
+                <div>rachaelgreene@gmail.com</div>
+                <div>Delivery around 13:30</div>
+              </div>
+              <div class="admin-order-delivery-price">
+                <div class="admin-order-delivery-subtotal">
+                  <div>Subtotal:</div>
+                  <div>120.000</div>
+                </div>
+                <div class="admin-order-delivery-cost">
+                  <div>Delivery cost:</div>
+                  <div><input type="text" /></div>
+                </div>
+                <div class="admin-order-delivery-total">
+                  <div>Total:</div>
+                  <span>155.000</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="admin-order-invoice">Review invoice</div>
+          <div class="admin-order-status">
+            <h4>Order Status</h4>
+            <div class="admin-order-status_finalizing-order status-grid">
+              <input type="checkbox" id="finalizing" name="finalizing" />
+              <label for="finalizing">Finalizing order</label>
+            </div>
+            <div class="admin-order-status_invoice status-grid">
+              <input type="checkbox" id="invoice" name="invoice" />
+              <label for="invoice">Invoice sent</label>
+            </div>
+            <div class="admin-order-status_payment-prepare status-grid">
+              <input type="checkbox" id="payment-prepare" name="payment-prepare" />
+              <label for="payment-prepare">Payment received and preparing order</label>
+            </div>
+            <div class="admin-order-status_delivering status-grid">
+              <input type="checkbox" id="delivering" name="delivering" />
+              <label for="delivering">Delivering order</label>
+            </div>
+            <div class="admin-order-status_complete status-grid">
+              <input type="checkbox" id="complete" name="complete" />
+              <label for="complete">Complete order</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('partials/admin-footer') %>

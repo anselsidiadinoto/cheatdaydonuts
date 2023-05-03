@@ -1,0 +1,171 @@
+<%- include('partials/admin-header') %>
+
+<section class="section-general-header">
+  <div class="container">
+    <div class="general-menu-header">
+      <div class="shop-header-text">
+        When will your donut shop be open next?
+      </div>
+      <div class="shop-header-time admin-text-bold">
+        Saturday, 15 November 2023
+      </div>
+      <div class="shop-header-not-open admin-btn-inactive">
+        <input type="checkbox" id="not-open" name="not-open" />
+        <label for="not-open">Not open anytime soon</label>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-admin-menu">
+  <div class="container">
+    <div class="admin-menu-nav">
+      <div class="admin-current-menu admin-btn-active">
+        Current menu items
+      </div>
+      <div class="admin-inactive-menu admin-btn-inactive">
+        Inactive menu items
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-admin-menu-items">
+  <div class="container">
+    <div class="admin-menu-item-container">
+
+      <% menuItemInfo.forEach((info) => { %>
+
+      <div class="admin-menu-items-component">
+        <div class="admin-menu-number"></div>
+        <div class="admin-menu-item">
+          <div class="admin-menu-item-name" id="menu_name_<%= info.id %>"><%= info.menu_name %></div>
+          <div class="admin-menu-item-description" id="menu_description_<%= info.id %>">
+            <%= info.menu_description %>
+          </div>
+          <div class=" admin-menu-item-price-number">
+            <div class="admin-menu-item-price" id="menu_price_<%= info.id %>"><%= info.menu_price %></div>
+            <div class="admin-menu-item-number-text">menu item no.</div>
+            <div class="admin-menu-item-number"><%= info.id %></div>
+          </div>
+          <div class="admin-menu-item-image-text">Image preview:</div>
+          <div class="admin-menu-item-image-frame"></div>
+
+
+          <div class="admin-menu-item-buttons">
+
+            <button onclick="open_editModal(<%= info.id %>)" class="admin-menu-item-edit-btn">
+              Edit
+            </button>
+
+            <button class="admin-menu-item-move-inactive-btn">
+              Move to inactive
+            </button>
+            <button class="admin-menu-item-delete-btn" onclick="delete_route(<%= info.id %>)">Delete</button>
+          </div>
+          <div class="admin-menu-item-image-upload">
+            <button class="admin-menu-item-image-upload-btn">
+              Upload new image
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <%})%>
+
+
+
+    </div>
+    <div class="admin-menu-add">
+      <button onclick="toggle_visibility('popup-modal');" type="button" class="admin-menu-add-btn">+</button>
+      <div class="admin-menu-add-text">Add new item</div>
+    </div>
+  </div>
+</section>
+
+<section class="admin-general-modals">
+  <div class="admin-menu-items-modal-container modal-display" id="popup-modal">
+    <div class="admin-menu-items-modal-content">
+
+      <form method="post" action="/admin/general_add_menu">
+        <div class="admin-menu-number"></div>
+        <div class="admin-menu-item">
+          <div class="admin-menu-item-name">
+            <input type="text" class="admin-menu-item-name" name="name">
+          </div>
+          <div class="admin-menu-item-description">
+            <input type="text" class="admin-menu-item-description" name="description">
+          </div>
+          <div class="admin-menu-item-price-number">
+            <div class="admin-menu-item-price">
+              <input type="text" class="admin-menu-item-price" name="price">
+            </div>
+            <div class="admin-menu-item-number-text">menu item no.</div>
+            <div class="admin-menu-item-number">TEXT</div>
+          </div>
+          <div class="admin-menu-item-image-text">Image preview:</div>
+          <div class="admin-menu-item-image-frame"></div>
+          <div class="admin-menu-item-buttons">
+            <button onclick="toggle_visibility('popup-modal');" action="submit" class="admin-menu-item-edit-btn">
+              Save
+            </button>
+
+            <a class="admin-menu-item-delete-btn" onclick="toggle_visibility('popup-modal');">Cancel</a>
+
+
+          </div>
+          <div class="admin-menu-item-image-upload">
+            <button class="admin-menu-item-image-upload-btn">
+              Upload new image
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <div style="display: none;" class="admin-menu-items-modal-container edit-modal-display" id="edit_modal">
+    <div class="admin-menu-items-modal-content">
+
+      <div class="update_form_container" id="update_form_container">
+        <form method="post" action="/admin/general_edit_menu" name="update_form_name">
+          <div class="admin-menu-number"></div>
+          <div class="admin-menu-item">
+            <div class="admin-menu-item-name">
+              <input type="text" class="admin-menu-item-name" id="edit_item_name" name="name" value="text">
+            </div>
+            <div class="admin-menu-item-description">
+              <input type="text" class="admin-menu-item-description" id="edit_item_description" name="description" value="text">
+            </div>
+            <div class="admin-menu-item-price-number">
+              <div class="admin-menu-item-price">
+                <input type="text" class="admin-menu-item-price" id="edit_item_price" name="price" value="number">
+              </div>
+              <div class="admin-menu-item-number-text">menu item no.</div>
+              <div class="admin-menu-item-number">TEXT</div>
+            </div>
+            <div class="admin-menu-item-image-text">Image preview:</div>
+            <div class="admin-menu-item-image-frame"></div>
+            <div class="admin-menu-item-buttons">
+              <button action="submit" class="admin-menu-item-edit-btn">
+                Save
+              </button>
+              <a class="admin-menu-item-delete-btn" onclick="close_editModal();">Cancel</a>
+              <!-- <button class="admin-menu-item-delete-btn">Delete</button> -->
+            </div>
+            <div class="admin-menu-item-image-upload">
+              <button class="admin-menu-item-image-upload-btn">
+                Upload new image
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<%- include('partials/admin-footer')%>
