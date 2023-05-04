@@ -1,3 +1,5 @@
+// ------------ MODAL CRUD ---------------
+
 function toggle_visibility(modal_id) {
   let modal = document.getElementById(modal_id).style;
 
@@ -14,12 +16,9 @@ function delete_route(item_id) {
 
 //prettier-ignore
 function open_editModal(item_id) {
-  let item_name = 
-      document.getElementById(`menu_name_${item_id}`).innerHTML;
-  let item_description = 
-      document.getElementById(`menu_description_${item_id}`).innerHTML;
-  let item_price = 
-      document.getElementById(`menu_price_${item_id}`).innerHTML;
+  let item_name = document.getElementById(`menu_name_${item_id}`).innerHTML;
+  let item_description = document.getElementById(`menu_description_${item_id}`).innerHTML;
+  let item_price = document.getElementById(`menu_price_${item_id}`).innerHTML;
 
   document.getElementById('edit_item_name').value = item_name;
   document.getElementById('edit_item_description').value = item_description;
@@ -38,4 +37,22 @@ function close_editModal() {
 
   if (editModal.display == 'block') editModal.display = 'none';
   else editModal.display = 'block';
+}
+
+// ------------ CURRENT AND INACTIVE ---------------
+
+function moveToInactive_route(item_id) {
+  location.href = `/admin/general_move_item_to_inactive/${item_id}`;
+}
+
+function moveToCurrent_route(item_id) {
+  location.href = `/admin/general_move_item_to_current/${item_id}`;
+}
+
+function showInactiveMenu_route() {
+  location.href = `/admin/general_show_inactive`;
+}
+
+function showCurrentMenu_route() {
+  location.href = `/admin/general`;
 }

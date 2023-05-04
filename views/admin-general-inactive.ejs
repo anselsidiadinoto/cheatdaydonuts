@@ -20,10 +20,10 @@
 <section class="section-admin-menu">
   <div class="container">
     <div class="admin-menu-nav">
-      <div class="admin-current-menu admin-btn-active">
+      <div class="admin-current-menu admin-btn-inactive">
         <a id="current_menu_tab" onclick="showCurrentMenu_route()">Current menu items</a>
       </div>
-      <div class="admin-inactive-menu admin-btn-inactive">
+      <div class="admin-inactive-menu admin-btn-active">
         <a id="inactive_menu_tab" onclick="showInactiveMenu_route()">Inactive menu items</a>
       </div>
     </div>
@@ -58,8 +58,8 @@
               Edit
             </button>
 
-            <button onclick="moveToInactive_route(<%= info.id %>)" class="admin-menu-item-move-inactive-btn">
-              Move to inactive
+            <button onclick="moveToCurrent_route(<%= info.id %>)" class="admin-menu-item-move-inactive-btn">
+              Move to current
             </button>
             <button onclick="delete_route(<%= info.id %>)" class="admin-menu-item-delete-btn">Delete</button>
           </div>
@@ -76,11 +76,7 @@
 
 
     </div>
-    <div class="admin-menu-add">
-      <button onclick="toggle_visibility('popup-modal');" type="button" class="admin-menu-add-btn">+</button>
-      <div class="admin-menu-add-text">Add new item</div>
-    </div>
-  </div>
+
 </section>
 
 

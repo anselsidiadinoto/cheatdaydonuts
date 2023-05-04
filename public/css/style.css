@@ -721,10 +721,16 @@ body {
 
 .admin-btn-active {
   font-weight: 500;
+  cursor: pointer;
 }
 
 .admin-btn-inactive {
   color: var(--clr-btn-inactive);
+  cursor: pointer;
+}
+
+.admin-btn-inactive:hover {
+  color: #d7696c;
 }
 
 .admin-menu-item-container {
