@@ -6,17 +6,17 @@
         <div class="admin-menu-number"></div>
         <div class="admin-menu-item">
           <div class="admin-menu-item-name">
-            <input type="text" class="admin-menu-item-name" name="name">
+            <input type="text" class="admin-menu-item-name" name="name" placeholder="name">
           </div>
           <div class="admin-menu-item-description">
-            <input type="text" class="admin-menu-item-description" name="description">
+            <textarea class="admin-menu-item-description" name="description" placeholder="description"></textarea>
           </div>
           <div class="admin-menu-item-price-number">
             <div class="admin-menu-item-price">
-              <input type="text" class="admin-menu-item-price" name="price">
+              <input type="text" class="admin-menu-item-price" name="price" placeholder="price">
             </div>
-            <div class="admin-menu-item-number-text">menu item no.</div>
-            <div class="admin-menu-item-number">TEXT</div>
+            <!-- <div class="admin-menu-item-number-text">menu item no.</div>
+            <div class="admin-menu-item-number"></div> -->
           </div>
           <div class="admin-menu-item-image-text">Image preview:</div>
           <div class="admin-menu-item-image-frame"></div>
@@ -51,14 +51,14 @@
               <input type="text" class="admin-menu-item-name" id="edit_item_name" name="name" value="text">
             </div>
             <div class="admin-menu-item-description">
-              <input type="text" class="admin-menu-item-description" id="edit_item_description" name="description" value="text">
+              <textarea class="admin-menu-item-description" id="edit_item_description" name="description"></textarea>
             </div>
             <div class="admin-menu-item-price-number">
               <div class="admin-menu-item-price">
                 <input type="text" class="admin-menu-item-price" id="edit_item_price" name="price" value="number">
               </div>
-              <div class="admin-menu-item-number-text">menu item no.</div>
-              <div class="admin-menu-item-number">TEXT</div>
+              <!-- <div class="admin-menu-item-number-text">menu item no.</div>
+              <div class="admin-menu-item-number">TEXT</div> -->
             </div>
             <div class="admin-menu-item-image-text">Image preview:</div>
             <div class="admin-menu-item-image-frame"></div>
@@ -77,6 +77,25 @@
           </div>
         </form>
       </div>
+
+    </div>
+  </div>
+
+
+  <div class="admin-store-status-modal-container" id="edit_store_status_modal">
+    <div class="admin-store-status-modal-content">
+      <form class="admin-store-status-update-form" method="post" action="/admin/general_update_store_status">
+        <div class="store-status-layout-1">is the store open?</div>
+        <select class="store-status-layout-2" name="store_status_option" id="store_status_option">
+          <option value="open">Yes</option>
+          <option value="closed">No</option>
+        </select>
+        <div class="store-status-layout-3">Open date:</div>
+        <input class="store-status-layout-4" type="text" id="store_date_input" value="<%= storeStatusDate %>" name="store_status_date">
+        <button action="submit" class="store-status-layout-5">Update</button>
+        <a onclick="close_editStoreStatusModal()" class="store-status-layout-6">Cancel</a>
+      </form>
+
 
     </div>
   </div>

@@ -35,63 +35,46 @@ CREATE TABLE menu_item_status (
         ('current'), --id 1
         ('inactive'); --id 2
 
-DROP TABLE IF EXISTS dashboard_general CASCADE;
-CREATE TABLE dashboard_general (
-    id SERIAL NOT NULL,
-    id_dashboard_store_status INT NOT NULL,
+-- DROP TABLE IF EXISTS dashboard_general CASCADE;
+-- CREATE TABLE dashboard_general (
+--     id SERIAL NOT NULL,
+--     id_dashboard_store_status INT NOT NULL,
 
-    CONSTRAINT pk_id_dashboard_general PRIMARY KEY (id),
-    CONSTRAINT uc_id_dashboard_general UNIQUE (id)
-    -- CONSTRAINT uc_id_dashboard_menu_display UNIQUE (id_dashboard_menu_display)
-);
+--     CONSTRAINT pk_id_dashboard_general PRIMARY KEY (id),
+--     CONSTRAINT uc_id_dashboard_general UNIQUE (id)
+--     -- CONSTRAINT uc_id_dashboard_menu_display UNIQUE (id_dashboard_menu_display)
+-- );
 
-DROP TABLE IF EXISTS dashboard_menu_display CASCADE;
-CREATE TABLE dashboard_menu_display (
+-- DROP TABLE IF EXISTS dashboard_menu_display CASCADE;
+-- CREATE TABLE dashboard_menu_display (
 
-    id SERIAL NOT NULL,
-    id_dashboard_general INT NOT NULL,
-    id_menu_item_status INT NOT NULL,
-    id_menu_item INT NOT NULL,
+--     id SERIAL NOT NULL,
+--     id_dashboard_general INT NOT NULL,
+--     id_menu_item_status INT NOT NULL,
+--     id_menu_item INT NOT NULL,
 
-    CONSTRAINT uc_id_dashboard_menu_display UNIQUE (id)
-);
+--     CONSTRAINT uc_id_dashboard_menu_display UNIQUE (id)
+-- );
 
 DROP TABLE IF EXISTS dashboard_store_status CASCADE;
 CREATE TABLE dashboard_store_status (
     id SERIAL NOT NULL,
     store_status VARCHAR(255) NOT NULL,
-    open_date VARCHAR(255),
+    open_date VARCHAR(255) NOT NULL,
+    menu_display VARCHAR(255),
 
     CONSTRAINT uc_id_dashbaord_store_status UNIQUE (id),
     CONSTRAINT pk_id_dashboard_store_status PRIMARY KEY (id)
 );
 
-    INSERT INTO dashboard_store_status (store_status, open_date)
+    INSERT INTO dashboard_store_status (store_status, open_date, menu_display)
     VALUES
-        ('open', 'Saturday, 16 June 2022'),
-        ('closed', '');
-
-
-
-
+        ('open', 'Saturday, 16 June 2022', 'current'), ('closed', 'Store is currently', '');
 
 
 ALTER TABLE menu_item ADD CONSTRAINT fk_id_menu_item_status 
     FOREIGN KEY(id_menu_item_status) 
     REFERENCES menu_item_status (id) ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE dashboard_general ADD CONSTRAINT fk_dashboard_general_to_store_status 
-    FOREIGN KEY (id_dashboard_store_status) 
-    REFERENCES dashboard_store_status (id) ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE dashboard_menu_display ADD CONSTRAINT fk_dashboard_menu_display_to_item_status
-    FOREIGN KEY (id_menu_item_status)
-    REFERENCES menu_item_status (id);
 
-ALTER TABLE dashboard_menu_display ADD CONSTRAINT fk_dashboard_menu_display_to_general
-    FOREIGN KEY (id_dashboard_general)
-    REFERENCES dashboard_general (id);
-
-ALTER TABLE dashboard_menu_display ADD CONSTRAINT fk_dashboard_menu_display_to_item
-    FOREIGN KEY (id_menu_item_status)
-    REFERENCES menu_item (id);

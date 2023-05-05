@@ -1,18 +1,15 @@
 <%- include('partials/admin-header') %>
 
 <section class="section-general-header">
-  <div class="container">
+  <div onclick="open_editStoreStatusModal()" class="container">
     <div class="general-menu-header">
       <div class="shop-header-text">
         When will your donut shop be open next?
       </div>
-      <div class="shop-header-time admin-text-bold">
-        Saturday, 15 November 2023
+      <div class="shop-header-time admin-text-bold" id="current_store_status">
+        <%= storeStatusDate %>
       </div>
-      <div class="shop-header-not-open admin-btn-inactive">
-        <input type="checkbox" id="not-open" name="not-open" />
-        <label for="not-open">Not open anytime soon</label>
-      </div>
+
     </div>
   </div>
 </section>

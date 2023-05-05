@@ -676,7 +676,7 @@ body {
 
 .general-menu-header {
   display: grid;
-  grid-template-columns: 3fr 3fr 1.7fr;
+  grid-template-columns: 2fr 3fr;
   margin: 4rem 0;
 
   font-size: 2rem;
@@ -692,7 +692,8 @@ body {
 .shop-header-not-open {
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: center;
+  text-decoration: line-through;
 }
 
 .shop-header-time {
@@ -704,6 +705,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.shop-header-time:hover {
+  cursor: pointer;
+  color: #9d0308;
+  background-color: #fffbfc;
 }
 
 .admin-menu-nav {
@@ -845,11 +852,15 @@ body {
 .admin-menu-item-delete-btn {
   color: var(--clr-btn-inactive);
   font-family: inherit;
+  font-size: 1.5rem;
   font-weight: 200;
   background-color: var(--clr-background);
   border: solid 0.1rem var(--clr-text-red-lighter);
   padding: 0.3rem 1.5rem;
   transition-duration: 0.2s;
+
+  display: flex;
+  align-items: center;
 }
 
 .admin-menu-item-edit-btn:hover,
@@ -857,12 +868,14 @@ body {
   background-color: #fff;
   color: #9d0308;
   border-color: #a70006;
+  cursor: default;
 }
 
 .admin-menu-item-delete-btn:hover {
   background-color: #edb4b6;
   color: #eaeaea;
   border-color: #a70006;
+  cursor: default;
 }
 
 .admin-menu-item-image-text {
@@ -953,16 +966,86 @@ body {
   background-color: rgba(0, 0, 0, 0.472);
 }
 
-.admin-menu-items-modal-content .admin-menu-item-name,
+.admin-menu-items-modal-content,
+.admin-menu-item-name,
 .admin-menu-item-description,
 .admin-menu-item-price {
   background-color: white;
+  margin: 0;
+  padding: 0.5rem;
+}
+
+.admin-menu-item-description {
+  display: block;
+}
+
+.admin-menu-items-modal-container .admin-menu-item {
+  border: none;
+  display: grid;
+  padding: 1.5rem;
+  grid-template-columns: 5fr 0.75fr 2fr;
+  grid-template-rows: 1fr 2fr 1fr 0.75fr;
+  grid-gap: 1rem;
+
+  grid-template-areas:
+    'name img-text img-frame'
+    'description img-text img-frame'
+    'price-number img-text img-frame'
+    'buttons img-text img-upload-btn';
+}
+
+.admin-menu-items-modal-content .admin-menu-item-name,
+.admin-menu-items-modal-content .admin-menu-item-description {
+  width: 100%;
+
+  border: none;
+  background-color: white;
+
+  /* border: solid 0.rem rgb(225, 225, 225); */
+}
+
+.admin-menu-items-modal-content .admin-menu-item-price {
+  border: none;
+  width: 15rem;
+}
+
+.admin-menu-items-modal-content .admin-menu-item-price input {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.admin-menu-items-modal-content .admin-menu-item-name input,
+.admin-menu-items-modal-content .admin-menu-item-description textarea,
+.admin-menu-items-modal-content .admin-menu-item-price input {
+  border: solid 0.1rem rgb(241, 241, 241);
+  padding: 0 0.25rem;
+  font-family: inherit;
+}
+
+.admin-menu-items-modal-content .admin-menu-item-description textarea {
+  font-size: 1.5rem;
+  overflow: auto;
+}
+
+.admin-menu-item-description textarea {
+  overflow: auto;
+  min-width: 0;
+}
+
+/* .admin-menu-items-modal-content .admin-menu-item-edit-btn,
+.admin-menu-items-modal-content .admin-menu-item-move-inactive-btn,
+.admin-menu-items-modal-content .admin-menu-item-delete-btn {
+  height: 50%;
+} */
+
+.admin-menu-items-modal-container {
 }
 
 .admin-menu-items-modal-content {
   background-color: rgb(234, 234, 234);
-  margin: 40% auto;
-  width: 85%;
+  margin: 20% auto;
+  width: 60%;
 }
 
 .modal-display {
@@ -977,6 +1060,104 @@ body {
 
 .admin-general-modals {
   transition: 0.4s;
+}
+
+.admin-store-status-modal-container {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.472);
+}
+
+.admin-store-status-modal-content {
+  background-color: rgb(234, 234, 234);
+  margin: 20% auto;
+  width: 65%;
+  padding: 3rem;
+}
+
+.admin-store-status-update-form {
+  height: 6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 200;
+}
+
+.store-status-layout-1 {
+  width: 12rem;
+}
+
+.store-status-layout-2 {
+  width: 6rem;
+  height: 4rem;
+  border: solid 0.1rem rgb(241, 241, 241);
+  font-family: inherit;
+  font-weight: 200;
+  font-size: 1.7rem;
+}
+
+.store-status-layout-3 {
+  width: 7rem;
+}
+
+.store-status-layout-4 {
+  width: 38rem;
+  height: 4rem;
+  border: solid 0.1rem rgb(241, 241, 241);
+  font-family: inherit;
+  font-weight: 200;
+  font-size: 1.7rem;
+}
+
+.store-status-layout-5 {
+  border: solid 0.1rem rgba(193, 59, 59, 0.59);
+  color: #9d0308;
+
+  background-color: none;
+  font-family: inherit;
+  font-weight: 200;
+  font-size: 1.7rem;
+  width: 6rem;
+  height: 4rem;
+  transition: 0.4s;
+}
+.store-status-layout-5:hover {
+  background-color: #fff;
+  color: #930000;
+
+  border-color: #a70006;
+  cursor: default;
+}
+
+.store-status-layout-6 {
+  border: solid 0.1rem rgba(167, 167, 167, 0.59);
+  color: #878787;
+  background-color: none;
+  font-family: inherit;
+  font-weight: 200;
+  font-size: 1.7rem;
+  width: 6rem;
+  height: 4rem;
+  transition: 0.4s;
+  cursor: default;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.store-status-layout-6:hover {
+  background-color: #fff;
+  color: #000000;
+
+  border-color: #717171;
+  cursor: default;
 }
 
 /* ----- CURRENT ORDERS ----- */

@@ -18,26 +18,57 @@ const getMenuItemById = function (req, res) {
   });
 };
 
-const getAllCurrentMenu = async function (req, res) {
+const getGeneralMenu = async function (req, res) {
   let menuItemsCurrent;
-  let menuItemsInactive;
+  let menuDisplay = req.params.id;
+  let menuDisplayId = 1; //General page defaults to current menu
+  let menuTab = '';
+
+  if (menuDisplay === 'current_menu') {
+    menuDisplayId = 1;
+  } else if (menuDisplay === 'inactive_menu') {
+    menuDisplayId = 2;
+    menuTab = '-inactive';
+  }
+
+  let dashboardRoute = 'admin-general' + menuTab;
+
+  console.log(menuDisplayId);
+  console.log(menuDisplay);
+  console.log(dashboardRoute);
+
   try {
     const results_1 = await pool.query(
-      'SELECT * FROM menu_item WHERE id_menu_item_status = 1 ORDER BY id ASC'
-    ); // console.log(results_1.rows);
+      'SELECT * FROM menu_item WHERE id_menu_item_status = $1 ORDER BY id ASC',
+      [menuDisplayId]
+    );
     const results_2 = await pool.query(
-      'SELECT * FROM menu_item WHERE id_menu_item_status = 2 ORDER BY id ASC'
+      'SELECT * FROM dashboard_store_status ORDER BY id ASC'
     );
     menuItemsCurrent = results_1.rows;
-    menuItemsInactive = results_2.rows;
+    let storeStatusOpen = results_2.rows[0].open_date;
+    let storeStatusClosed = results_2.rows[1].open_date;
+    let storeStatus = results_2.rows[0].store_status;
 
-    res.render('admin-general', { menuItemInfo: menuItemsCurrent });
+    console.log(storeStatus);
+
+    if (storeStatus === 'open') {
+      res.render(dashboardRoute, {
+        menuItemInfo: menuItemsCurrent,
+        storeStatusDate: storeStatusOpen,
+      });
+    } else if (storeStatus === 'closed') {
+      res.render(dashboardRoute, {
+        menuItemInfo: menuItemsCurrent,
+        storeStatusDate: storeStatusClosed,
+      });
+    }
   } catch (error) {
     console.log(error);
   }
-  console.log('-------');
-  console.log(menuItemsCurrent);
-  console.log(menuItemsInactive);
+  // console.log('-------');
+  // console.log(menuItemsCurrent);
+  // console.log(storeStatus);
 
   // pool.query(
   //   'SELECT * FROM menu_item WHERE id_menu_item_status = 1 ORDER BY id ASC',
@@ -53,18 +84,37 @@ const getAllCurrentMenu = async function (req, res) {
   // );
 };
 
-const getAllInactiveMenu = function (req, res) {
-  pool.query(
-    'SELECT * FROM menu_item WHERE id_menu_item_status = 2 ORDER BY id ASC',
-    function (error, results) {
-      if (error) {
-        console.log(err);
-      } else {
-        res.render('admin-general-inactive', { menuItemInfo: results.rows });
-      }
-    }
-  );
+const updateStoreStatus = async function (req, res) {
+  try {
+    const results_1 = await pool.query(
+      'UPDATE dashboard_store_status SET open_date=$1, store_status=$2 WHERE id=1',
+      [req.body.store_status_date, req.body.store_status_option]
+    );
+
+    res.redirect('/admin/general');
+  } catch (error) {
+    console.log(error);
+  }
 };
+
+// const getAllInactiveMenu = function (req, res) {
+//   pool.query(
+//     'UPDATE dashboard_store_status SET menu_display=$1 WHERE id = 1',
+//     ['inactive'],
+//     function (error, results) {
+//       if (error) {
+//         console.log(error);
+//       } else {
+//         res.redirect('/admin/general');
+//       }
+//     }
+//   );
+// };
+
+// const getAllCurrentMenu = function (req, res) {
+//   console.log(req.params.id);
+//   // res.redirect('/admin/general');
+// };
 
 const moveItemtoInactive = function (req, res) {
   pool.query(
@@ -88,7 +138,7 @@ const moveItemtoCurrent = function (req, res) {
       if (error) {
         console.log(error);
       } else {
-        res.redirect('/admin/general_show_inactive');
+        res.redirect('/admin/general/inactive_menu');
       }
     }
   );
@@ -141,11 +191,13 @@ const updateMenuItem = function (req, res) {
 module.exports = {
   getMenuItem,
   getMenuItemById,
-  getAllCurrentMenu,
-  getAllInactiveMenu,
+  // getAllCurrentMenu,
+  // getAllInactiveMenu,
   addMenuItem,
   deleteMenuItem,
   updateMenuItem,
   moveItemtoInactive,
   moveItemtoCurrent,
+  updateStoreStatus,
+  getGeneralMenu,
 };
