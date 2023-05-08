@@ -2,40 +2,26 @@ const pool = require('../../db');
 const queries = require('./queries');
 const bodyParser = require('body-parser');
 
-const getMenuItem = function (req, res) {
-  pool.query(queries.getMenuItem, function (error, results) {
-    if (error) throw error;
-    res.status(200).json(results.rows);
-  });
-};
-
-const getMenuItemById = function (req, res) {
-  const id = parseInt(req.params.id);
-
-  pool.query(queries.getMenuItemById, [id], function (error, results) {
-    if (error) throw error;
-    res.status(200).json(results.rows);
-  });
-};
-
 const getGeneralMenu = async function (req, res) {
   let menuItemsCurrent;
-  let menuDisplay = req.params.id;
+  let menuItemsInactive;
+  let menuDisplay = req.params.page_display;
   let menuDisplayId = 1; //General page defaults to current menu
-  let menuTab = '';
+  let storeStatusDisplay;
+  let dashboardRoute;
+  let storeStatus;
+
+  console.log(menuDisplay);
 
   if (menuDisplay === 'current_menu') {
     menuDisplayId = 1;
+    dashboardRoute = 'admin-general';
   } else if (menuDisplay === 'inactive_menu') {
     menuDisplayId = 2;
-    menuTab = '-inactive';
+    dashboardRoute = 'admin-general-inactive';
+  } else {
+    dashboardRoute = 'admin-general';
   }
-
-  let dashboardRoute = 'admin-general' + menuTab;
-
-  console.log(menuDisplayId);
-  console.log(menuDisplay);
-  console.log(dashboardRoute);
 
   try {
     const results_1 = await pool.query(
@@ -45,43 +31,24 @@ const getGeneralMenu = async function (req, res) {
     const results_2 = await pool.query(
       'SELECT * FROM dashboard_store_status ORDER BY id ASC'
     );
-    menuItemsCurrent = results_1.rows;
-    let storeStatusOpen = results_2.rows[0].open_date;
-    let storeStatusClosed = results_2.rows[1].open_date;
-    let storeStatus = results_2.rows[0].store_status;
 
-    console.log(storeStatus);
+    menuItemsCurrent = results_1.rows;
+    storeStatus = results_2.rows[0].store_status;
 
     if (storeStatus === 'open') {
-      res.render(dashboardRoute, {
-        menuItemInfo: menuItemsCurrent,
-        storeStatusDate: storeStatusOpen,
-      });
+      storeStatusDisplay = results_2.rows[0].open_date;
     } else if (storeStatus === 'closed') {
-      res.render(dashboardRoute, {
-        menuItemInfo: menuItemsCurrent,
-        storeStatusDate: storeStatusClosed,
-      });
+      storeStatusDisplay = results_2.rows[1].open_date;
     }
+
+    res.render(dashboardRoute, {
+      menuItemInfo: menuItemsCurrent,
+      storeStatusDate: storeStatusDisplay,
+    });
+    // --
   } catch (error) {
     console.log(error);
   }
-  // console.log('-------');
-  // console.log(menuItemsCurrent);
-  // console.log(storeStatus);
-
-  // pool.query(
-  //   'SELECT * FROM menu_item WHERE id_menu_item_status = 1 ORDER BY id ASC',
-  //   function (error, results) {
-  //     if (error) {
-  //       console.log(err);
-  //     } else {
-  //       // console.log(results.rows);
-  //       return results.rows;
-  //       // res.render('admin-general', { menuItemInfo: results.rows });
-  //     }
-  //   }
-  // );
 };
 
 const updateStoreStatus = async function (req, res) {
@@ -96,25 +63,6 @@ const updateStoreStatus = async function (req, res) {
     console.log(error);
   }
 };
-
-// const getAllInactiveMenu = function (req, res) {
-//   pool.query(
-//     'UPDATE dashboard_store_status SET menu_display=$1 WHERE id = 1',
-//     ['inactive'],
-//     function (error, results) {
-//       if (error) {
-//         console.log(error);
-//       } else {
-//         res.redirect('/admin/general');
-//       }
-//     }
-//   );
-// };
-
-// const getAllCurrentMenu = function (req, res) {
-//   console.log(req.params.id);
-//   // res.redirect('/admin/general');
-// };
 
 const moveItemtoInactive = function (req, res) {
   pool.query(
@@ -167,7 +115,7 @@ const deleteMenuItem = function (req, res) {
       if (error) {
         console.log(error);
       } else {
-        res.redirect('/admin/general');
+        res.redirect(`/admin/general/${req.params.page_display}`);
       }
     }
   );
@@ -182,17 +130,13 @@ const updateMenuItem = function (req, res) {
       if (error) {
         console.log(error);
       } else {
-        res.redirect('/admin/general');
+        res.redirect(`/admin/general/${req.params.page_display}`);
       }
     }
   );
 };
 
 module.exports = {
-  getMenuItem,
-  getMenuItemById,
-  // getAllCurrentMenu,
-  // getAllInactiveMenu,
   addMenuItem,
   deleteMenuItem,
   updateMenuItem,

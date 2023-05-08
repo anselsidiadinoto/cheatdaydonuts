@@ -1,5 +1,6 @@
 const express = require('express');
 const adminRoutes = require('./src/menu_item/adminRoutes');
+const orderRoutes = require('./src/order_item/orderRoutes');
 
 const bodyParser = require('body-parser');
 
@@ -13,29 +14,7 @@ app.use(express.static('public'));
 
 app.use(express.json());
 
-app.get('/', function (req, res) {
-  res.render('order_home');
-});
-
-app.get('/order', function (req, res) {
-  res.render('order-menu');
-});
-
-app.get('/order-delivery-info', function (req, res) {
-  res.render('order-delivery-info');
-});
-
-app.get('/order-review', function (req, res) {
-  res.render('order-review');
-});
-
-app.get('/order-confirmation', function (req, res) {
-  res.render('order-confirmation');
-});
-
-app.get('/admin-orders', function (req, res) {
-  res.render('admin-orders');
-});
+app.use('/', orderRoutes);
 
 app.use('/admin/', adminRoutes);
 

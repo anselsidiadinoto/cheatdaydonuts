@@ -69,7 +69,7 @@ CREATE TABLE dashboard_store_status (
 
     INSERT INTO dashboard_store_status (store_status, open_date, menu_display)
     VALUES
-        ('open', 'Saturday, 16 June 2022', 'current'), ('closed', 'Store is currently', '');
+        ('open', 'Saturday, 16 June 2022', 'current'), ('closed', 'Store is currently closed', '');
 
 
 ALTER TABLE menu_item ADD CONSTRAINT fk_id_menu_item_status 

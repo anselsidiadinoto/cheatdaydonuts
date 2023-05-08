@@ -30,8 +30,7 @@
 
       <div class="delivery-date-box">
         <div class="delivery-date-text text-main">
-          <p class="day">Saturday <br /></p>
-          <p class="date">15th April 2023</p>
+          <p class="date"><%= storeStatusDate %></p>
         </div>
       </div>
       <div class="order-description-info text-main">
@@ -52,13 +51,16 @@
     </div>
     <div class="menu">
       <ul class="menu-container">
-        <li class="menu-items test-1">
+
+        <% menuItemInfo.forEach(info => { %>
+
+
+        <li class="menu-items">
           <div class="menu-items-layout">
             <div class="menu-items-description">
-              <h4>biscoff crumble</h4>
+              <h4 id="item_name_<%= info.id %>"><%= info.menu_name %></h4>
               <p>
-                Lotus biscoff cream filing. topped with lotus biscoff glaze.
-                lotus biscoff crumbs. & lotus biscoff caramelized biscuit
+                <%= info.menu_description %>
               </p>
             </div>
             <div class="menu-items-image">
@@ -66,200 +68,37 @@
                 <img src="../img/donut_preview.jpeg" class="menu-items-image-pic" alt="Donut Preview" />
               </div>
             </div>
-            <div class="menu-items-price">
-              <p>15.000</p>
+            <div class="menu-items-price" id="item_price_<%= info.id %>">
+              <%= info.menu_price %>
             </div>
-            <div class="menu-items-addbtn">
-              <div class="addbtn-frame">
-                <div class="addbtn-text">
-                  <p>Add</p>
+
+            <div class="menu-items-btn">
+
+              <div class="items-order-menu-page">
+                <div class="order-plus-minus-frame">
+
+                  <div class="minus-btn">
+                    <button onclick="removeItemFromCart(<%= info.id %>)">-</button>
+                  </div>
+                  <div class="items-quantity" id="item_quantity_<%= info.id %>">0</div>
+                  <div class="plus-btn">
+                    <button onclick="addItemToCart(<%= info.id %>)">+</button>
+                  </div>
+
                 </div>
+
+                <!-- <div class="addbtn-frame">
+                  <div class="addbtn-text">
+                    <p>Add</p>
+                  </div>
+                </div> -->
               </div>
             </div>
-          </div>
         </li>
-        <li class="menu-items test-2">
-          <div class="menu-items-layout">
-            <div class="menu-items-description">
-              <h4>biscoff crumble</h4>
-              <p>
-                Lotus biscoff cream filing. topped with lotus biscoff glaze.
-                lotus biscoff crumbs. & lotus biscoff caramelized biscuit
-              </p>
-            </div>
-            <div class="menu-items-image">
-              <div class="menu-items-image-frame">
-                <img src="../img/donut_preview.jpeg" class="menu-items-image-pic" alt="Donut Preview" />
-              </div>
-            </div>
-            <div class="menu-items-price">
-              <p>15.000</p>
-            </div>
-            <div class="menu-items-addbtn">
-              <div class="addbtn-frame">
-                <div class="addbtn-text">
-                  <p>Add</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="menu-items test-3">
-          <div class="menu-items-layout">
-            <div class="menu-items-description">
-              <h4>biscoff crumble</h4>
-              <p>
-                Lotus biscoff cream filing. topped with lotus biscoff glaze.
-                lotus biscoff crumbs. & lotus biscoff caramelized biscuit
-              </p>
-            </div>
-            <div class="menu-items-image">
-              <div class="menu-items-image-frame">
-                <img src="../img/donut_preview.jpeg" class="menu-items-image-pic" alt="Donut Preview" />
-              </div>
-            </div>
-            <div class="menu-items-price">
-              <p>15.000</p>
-            </div>
-            <div class="menu-items-addbtn">
-              <div class="addbtn-frame">
-                <div class="addbtn-text">
-                  <p>Add</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="menu-items test-4">
-          <div class="menu-items-layout">
-            <div class="menu-items-description">
-              <h4>biscoff crumble</h4>
-              <p>
-                Lotus biscoff cream filing. topped with lotus biscoff glaze.
-                lotus biscoff crumbs. & lotus biscoff caramelized biscuit
-              </p>
-            </div>
-            <div class="menu-items-image">
-              <div class="menu-items-image-frame">
-                <img src="../img/donut_preview.jpeg" class="menu-items-image-pic" alt="Donut Preview" />
-              </div>
-            </div>
-            <div class="menu-items-price">
-              <p>15.000</p>
-            </div>
-            <div class="menu-items-addbtn">
-              <div class="addbtn-frame">
-                <div class="addbtn-text">
-                  <p>Add</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="menu-items test-1">
-          <div class="menu-items-layout">
-            <div class="menu-items-description">
-              <h4>biscoff crumble</h4>
-              <p>
-                Lotus biscoff cream filing. topped with lotus biscoff glaze.
-                lotus biscoff crumbs. & lotus biscoff caramelized biscuit
-              </p>
-            </div>
-            <div class="menu-items-image">
-              <div class="menu-items-image-frame">
-                <img src="../img/donut_preview.jpeg" class="menu-items-image-pic" alt="Donut Preview" />
-              </div>
-            </div>
-            <div class="menu-items-price">
-              <p>15.000</p>
-            </div>
-            <div class="menu-items-addbtn">
-              <div class="addbtn-frame">
-                <div class="addbtn-text">
-                  <p>Add</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="menu-items test-2">
-          <div class="menu-items-layout">
-            <div class="menu-items-description">
-              <h4>biscoff crumble</h4>
-              <p>
-                Lotus biscoff cream filing. topped with lotus biscoff glaze.
-                lotus biscoff crumbs. & lotus biscoff caramelized biscuit
-              </p>
-            </div>
-            <div class="menu-items-image">
-              <div class="menu-items-image-frame">
-                <img src="../img/donut_preview.jpeg" class="menu-items-image-pic" alt="Donut Preview" />
-              </div>
-            </div>
-            <div class="menu-items-price">
-              <p>15.000</p>
-            </div>
-            <div class="menu-items-addbtn">
-              <div class="addbtn-frame">
-                <div class="addbtn-text">
-                  <p>Add</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="menu-items test-3">
-          <div class="menu-items-layout">
-            <div class="menu-items-description">
-              <h4>biscoff crumble</h4>
-              <p>
-                Lotus biscoff cream filing. topped with lotus biscoff glaze.
-                lotus biscoff crumbs. & lotus biscoff caramelized biscuit
-              </p>
-            </div>
-            <div class="menu-items-image">
-              <div class="menu-items-image-frame">
-                <img src="../img/donut_preview.jpeg" class="menu-items-image-pic" alt="Donut Preview" />
-              </div>
-            </div>
-            <div class="menu-items-price">
-              <p>15.000</p>
-            </div>
-            <div class="menu-items-addbtn">
-              <div class="addbtn-frame">
-                <div class="addbtn-text">
-                  <p>Add</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="menu-items test-4">
-          <div class="menu-items-layout">
-            <div class="menu-items-description">
-              <h4>biscoff crumble</h4>
-              <p>
-                Lotus biscoff cream filing. topped with lotus biscoff glaze.
-                lotus biscoff crumbs. & lotus biscoff caramelized biscuit
-              </p>
-            </div>
-            <div class="menu-items-image">
-              <div class="menu-items-image-frame">
-                <img src="../img/donut_preview.jpeg" class="menu-items-image-pic" alt="Donut Preview" />
-              </div>
-            </div>
-            <div class="menu-items-price">
-              <p>15.000</p>
-            </div>
-            <div class="menu-items-addbtn">
-              <div class="addbtn-frame">
-                <div class="addbtn-text">
-                  <p>Add</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
+
+        <% }) %>
+
+
       </ul>
     </div>
   </div>
@@ -270,17 +109,18 @@
     <div class="subtotal-checkout-layout">
       <div class="subtotal-frame">
         <div class="subtotal-all-items">
-          <p>Subtotal: <span>4 items</span></p>
+          <div class="subtotal-all-text">
+            <div>Subtotal:</div>
+            <div class="subtotal_all_quantity" id="subtotal_items_quantity">0</div>
+            <span>items</span>
+          </div>
+          <div class="subtotal-price" id="subtotal_items_price">
+
+          </div>
         </div>
-        <div class="subtotal-price">
-          <p>60.000</p>
-        </div>
-        <div class="subtotal-each-items">
-          <p>
-            (1) nutella, (2) peanut butt, (1) biscoff crumble, (1) nutella,
-            (2) peanut butt, (1) biscoff crumble, (1) nutella, (2) peanut
-            butt, (1) biscoff crumble
-          </p>
+
+        <div class="subtotal-each-items" id="subtotal_items">
+
         </div>
       </div>
 
