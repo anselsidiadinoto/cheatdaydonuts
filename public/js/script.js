@@ -1,6 +1,19 @@
 // ------------ START SCRIPT ---------------
+let menu_tab;
 
-window.onload = function startScript() {};
+window.onload = function startScript() {
+  let link = window.location.href;
+
+  // console.log(link);
+
+  if (link.includes('current_menu')) {
+    console.log('this link is current menu');
+    menu_tab = 'current_menu';
+  } else if (link.includes('inactive_menu')) {
+    console.log('this link is inactive menu');
+    menu_tab = 'inactive_menu';
+  }
+};
 
 // ------------ MODAL CRUD ---------------
 
@@ -13,7 +26,7 @@ function toggle_visibility(modal_id) {
 
 function delete_route(item_id) {
   if (confirm('Are you sure you want to delete this item?')) {
-    location.href = `/admin/general_delete_item/${item_id}`;
+    location.href = `/admin/general_delete_item/${menu_tab}/${item_id}`;
   }
 }
 
@@ -28,7 +41,7 @@ function open_editModal(item_id) {
   document.getElementById('edit_item_price').value = item_price;
 
   document.getElementById('update_form_container').firstElementChild.action = 
-  `/admin/general_edit_menu/${item_id}`;
+  `/admin/general_edit_menu/${menu_tab}/${item_id}`;
 
   document.getElementById('edit_modal').style.display = 'block';
 }
@@ -57,11 +70,11 @@ function close_editStoreStatusModal() {
 // ------------ CURRENT AND INACTIVE ---------------
 
 function moveToInactive_route(item_id) {
-  location.href = `/admin/general_move_item_to_inactive/${item_id}`;
+  location.href = `/admin/general_move_item_to_inactive/current_menu/${item_id}`;
 }
 
 function moveToCurrent_route(item_id) {
-  location.href = `/admin/general_move_item_to_current/${item_id}`;
+  location.href = `/admin/general_move_item_to_current/inactive_menu/${item_id}`;
 }
 
 function showInactiveMenu_route() {
@@ -92,3 +105,123 @@ function showCurrentMenu_route() {
 //     dateInputStyle.backgroundColor = '#fff';
 //   }
 // }
+
+// ----------- ORDER PAGE START MENU ----------------
+
+// const plus = document.getElementsByClassName('plus-btn');
+// const itemsQuantity = document.getElementsByClassName('items-quantity');
+// const minus = document.getElementsByClassName('minus-btn');
+// const menuItems = document.getElementsByClassName('menu-items');
+
+// for (let i = 0; i < menuItems.length; i++) {
+//   let quantity = +itemsQuantity[i].innerHTML;
+//   let button_plus = plus[i];
+//   let button_minus = minus[i];
+
+//   button_plus.addEventListener('click', function () {
+//     quantity++;
+//     itemsQuantity[i].innerHTML = quantity;
+//     addItemToCart(title, price);
+//     updateCartTotal();
+//   });
+
+//   button_minus.addEventListener('click', function () {
+//     quantity--;
+//     itemsQuantity[i].innerHTML = quantity;
+//     removeItemFromCart(title, price);
+//     updateCartTotal();
+//   });
+// }
+
+function addItemToCart(item_id) {
+  let quantity = +document.getElementById(`item_quantity_${item_id}`).innerHTML;
+  let name = document.getElementById(`item_name_${item_id}`).innerHTML;
+  let price = +document.getElementById(`item_price_${item_id}`).innerHTML;
+  let updateValue = 1;
+  let updatePrice = price;
+  let initialQuantity = quantity;
+
+  let updateQuantity = quantity + 1;
+
+  document.getElementById(`item_quantity_${item_id}`).innerHTML =
+    updateQuantity;
+
+  updateCart(
+    updateValue,
+    name,
+    updatePrice,
+    initialQuantity,
+    updateQuantity,
+    item_id
+  );
+}
+
+function removeItemFromCart(item_id) {
+  let quantity = +document.getElementById(`item_quantity_${item_id}`).innerHTML;
+  let name = document.getElementById(`item_name_${item_id}`).innerHTML;
+  let price = +document.getElementById(`item_price_${item_id}`).innerHTML;
+  let currentItemElement = document.getElementById(`cart_item_${item_id}`);
+
+  let updateValue;
+  let updatePrice;
+  let updateQuantity;
+  let initialQuantity = quantity;
+
+  if (currentItemElement === null) {
+    return;
+  }
+
+  if (quantity > 0) {
+    updateValue = -1;
+    updatePrice = -price;
+    updateQuantity = quantity - 1;
+  } else if (quantity === 0) {
+    updateValue = 0;
+    updatePrice = 0;
+    updateQuantity = 0;
+  }
+
+  document.getElementById(`item_quantity_${item_id}`).innerHTML =
+    updateQuantity;
+
+  updateCart(
+    updateValue,
+    name,
+    updatePrice,
+    initialQuantity,
+    updateQuantity,
+    item_id
+  );
+}
+//prettier-ignore
+function updateCart(updateValue, name, updatePrice, initialQuantity, updateQuantity, item_id) {
+  let totalItemsQuantity = +document.getElementById(`subtotal_items_quantity`).innerHTML;
+  let totalItemsPrice = +document.getElementById(`subtotal_items_price`).innerHTML;
+  let currentItemElement = document.getElementById(`cart_item_${item_id}`);
+
+  let updatedItemsQuantity = totalItemsQuantity + updateValue;
+  document.getElementById(`subtotal_items_quantity`).innerHTML = updatedItemsQuantity;
+
+  updatedItemsPrice = totalItemsPrice + updatePrice;
+  document.getElementById(`subtotal_items_price`).innerHTML = updatedItemsPrice;
+
+  console.log(updatedItemsQuantity);
+
+  if (updateQuantity === 0) {
+    currentItemElement.remove();
+    return;
+  }
+  
+  if (initialQuantity === 0) {
+    let cartItemDiv = document.createElement('div');
+    cartItemDiv.id = `cart_item_${item_id}`
+    cartItemContent = `(${updateQuantity}) ${name}`
+    cartItemDiv.innerHTML = cartItemContent
+
+    document.getElementById('subtotal_items').appendChild(cartItemDiv);
+
+  } else if (initialQuantity > 0) {
+    document.getElementById(`cart_item_${item_id}`).innerHTML = `(${updateQuantity}) ${name}`
+  }
+  
+}
