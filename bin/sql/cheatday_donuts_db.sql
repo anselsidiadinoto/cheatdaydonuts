@@ -35,27 +35,6 @@ CREATE TABLE menu_item_status (
         ('current'), --id 1
         ('inactive'); --id 2
 
--- DROP TABLE IF EXISTS dashboard_general CASCADE;
--- CREATE TABLE dashboard_general (
---     id SERIAL NOT NULL,
---     id_dashboard_store_status INT NOT NULL,
-
---     CONSTRAINT pk_id_dashboard_general PRIMARY KEY (id),
---     CONSTRAINT uc_id_dashboard_general UNIQUE (id)
---     -- CONSTRAINT uc_id_dashboard_menu_display UNIQUE (id_dashboard_menu_display)
--- );
-
--- DROP TABLE IF EXISTS dashboard_menu_display CASCADE;
--- CREATE TABLE dashboard_menu_display (
-
---     id SERIAL NOT NULL,
---     id_dashboard_general INT NOT NULL,
---     id_menu_item_status INT NOT NULL,
---     id_menu_item INT NOT NULL,
-
---     CONSTRAINT uc_id_dashboard_menu_display UNIQUE (id)
--- );
-
 DROP TABLE IF EXISTS dashboard_store_status CASCADE;
 CREATE TABLE dashboard_store_status (
     id SERIAL NOT NULL,
@@ -72,9 +51,135 @@ CREATE TABLE dashboard_store_status (
         ('open', 'Saturday, 16 June 2022', 'current'), ('closed', 'Store is currently closed', '');
 
 
+DROP TABLE IF EXISTS cart CASCADE;
+CREATE TABLE cart (
+    id SERIAL NOT NULL,
+    cart_status VARCHAR(255) NOT NULL,
+    customer_name VARCHAR(255),
+    delivery_address TEXT,
+    phone_number BIGINT,
+    email VARCHAR(255),
+    delivery_time VARCHAR(255),
+    order_notes TEXT,
+    total_price INT,
+
+
+    CONSTRAINT uc_id_cart UNIQUE (id),
+    CONSTRAINT pk_id_cart PRIMARY KEY (id)
+);
+
+    -- INSERT INTO cart (id, cart_name)
+    -- VALUES 
+    --     (1, 'ansel'), (2, 'duann'), (3, 'jason');
+
+
+DROP TABLE IF EXISTS order_cart CASCADE;
+CREATE TABLE order_cart (
+    id SERIAL NOT NULL,
+    id_cart INT NOT NULL,
+    id_menu_item INT NOT NULL,
+    quantity INT NOT NULL,
+
+    CONSTRAINT uc_id_order_cart UNIQUE (id),
+    CONSTRAINT pk_id_order_cart PRIMARY KEY (id)
+);
+
+    -- INSERT INTO order_cart (id_cart, id_menu_item, quantity)
+    -- VALUES
+    -- (1, 4, 5), (2, 2, 4), (2, 1, 3), (3, 4, 5), (3, 2, 4), (3, 3, 6);
+
+-- SET TIMEZONE='+08';
+DROP TABLE IF EXISTS orders_information CASCADE;
+CREATE TABLE orders_information (
+    id SERIAL NOT NULL,
+    customer_name VARCHAR(255) NOT NULL,
+    delivery_address TEXT NOT NULL,
+    phone_number BIGINT NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    delivery_time VARCHAR(255) NOT NULL,
+    order_notes TEXT,
+    total_price INT NOT NULL,
+    order_time TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    id_order_status INT NOT NULL DEFAULT 1, 
+
+
+    CONSTRAINT uc_id_orders_information UNIQUE (id),
+    CONSTRAINT pk_id_orders_information PRIMARY KEY (id)
+);
+
+DROP TABLE IF EXISTS order_status CASCADE;
+CREATE TABLE order_status (
+    id SERIAL NOT NULL,
+    order_status VARCHAR(255),
+
+    CONSTRAINT uc_id_order_status UNIQUE (id),
+    CONSTRAINT pk_id_order_status PRIMARY KEY (id)
+);
+
+    INSERT INTO order_status(order_status) 
+        VALUES ('in-progress'), ('completed');
+
+
+DROP TABLE IF EXISTS orders_items CASCADE;
+CREATE TABLE orders_items (
+    id SERIAL NOT NULL,
+    id_order INT NOT NULL,
+    id_menu_item INT NOT NULL,
+    quantity INT NOT NULL,
+
+    CONSTRAINT uc_id_orders_items UNIQUE (id),
+    CONSTRAINT pk_id_orders_items PRIMARY KEY (id)
+);
+
 ALTER TABLE menu_item ADD CONSTRAINT fk_id_menu_item_status 
     FOREIGN KEY(id_menu_item_status) 
     REFERENCES menu_item_status (id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE order_cart ADD CONSTRAINT fk_id_cart_order_cart
+    FOREIGN KEY(id_cart) 
+    REFERENCES cart (id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE order_cart ADD CONSTRAINT fk_id_menu_item_cart
+    FOREIGN KEY(id_menu_item) 
+    REFERENCES menu_item (id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE orders_information ADD CONSTRAINT fk_id_order_status 
+    FOREIGN KEY(id_order_status)
+    REFERENCES order_status(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE orders_items ADD CONSTRAINT fk_id_order_item
+    FOREIGN KEY(id_menu_item)
+    REFERENCES menu_item (id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+----------------------
+
+CREATE VIEW order_items_review AS
+    SELECT 
+    order_cart.id_cart, 
+    menu_item.menu_name, 
+    menu_item.id,
+    menu_item.menu_price, 
+    order_cart.quantity,
+    menu_price * quantity AS each_subtotal
+
+    FROM order_cart JOIN menu_item
+    ON order_cart.id_menu_item = menu_item.id;
+
+CREATE VIEW admin_order_items AS
+    SELECT
+    orders_items.id_order,
+    menu_item.menu_name,
+    menu_item.id,
+    orders_items.quantity,
+    menu_item.menu_price,
+    menu_price * quantity AS each_subtotal
+
+    FROM orders_items JOIN menu_item
+    ON orders_items.id_menu_item = menu_item.id;
+
+    
+
+
 
 
 

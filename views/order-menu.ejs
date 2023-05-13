@@ -106,30 +106,34 @@
 
 <section class="subtotal-checkout">
   <div class="container">
-    <div class="subtotal-checkout-layout">
-      <div class="subtotal-frame">
-        <div class="subtotal-all-items">
-          <div class="subtotal-all-text">
-            <div>Subtotal:</div>
-            <div class="subtotal_all_quantity" id="subtotal_items_quantity">0</div>
-            <span>items</span>
+    <form action="/order_add_cart" method="post">
+
+      <div class="subtotal-checkout-layout">
+        <div class="subtotal-frame">
+          <div class="subtotal-all-items">
+            <div class="subtotal-all-text">
+              <div>Subtotal:</div>
+              <div class="subtotal_all_quantity" id="subtotal_items_quantity">0</div>
+              <span>items</span>
+            </div>
+            <div class="subtotal-price" id="subtotal_items_price">
+
+            </div>
           </div>
-          <div class="subtotal-price" id="subtotal_items_price">
 
+          <div class="subtotal-each-items" id="subtotal_items">
           </div>
         </div>
 
-        <div class="subtotal-each-items" id="subtotal_items">
-
+        <div class="checkoutbtn-frame">
+          <button class="checkoutbtn">
+            Checkout
+          </button>
         </div>
-      </div>
 
-      <div class="checkoutbtn-frame">
-        <div class="checkoutbtn">
-          <p>Checkout</p>
-        </div>
       </div>
-    </div>
+    </form>
+
   </div>
 </section>
 

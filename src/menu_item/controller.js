@@ -1,6 +1,8 @@
 const pool = require('../../db');
 const queries = require('./queries');
 const bodyParser = require('body-parser');
+const { all } = require('./adminRoutes');
+const { CLIENT_RENEG_LIMIT } = require('tls');
 
 const getGeneralMenu = async function (req, res) {
   let menuItemsCurrent;
@@ -136,6 +138,29 @@ const updateMenuItem = function (req, res) {
   );
 };
 
+const getAdminOrders = async function (req, res) {
+  try {
+    let ordersQuery = await pool.query('SELECT * FROM orders_information');
+
+    let itemsQuery = await pool.query('SELECT * FROM admin_order_items');
+
+    for (let i = 0; i < ordersQuery.rows.length; i++) {
+      let query_order_id = ordersQuery.rows[i].id;
+      let all_order_items = itemsQuery.rows;
+      let order_items_array = all_order_items.filter((item) => {
+        return item.id_order == query_order_id;
+      });
+      ordersQuery.rows[i].order_items = order_items_array;
+    }
+
+    res.render('admin-orders', {
+      orders: ordersQuery.rows,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   addMenuItem,
   deleteMenuItem,
@@ -144,4 +169,5 @@ module.exports = {
   moveItemtoCurrent,
   updateStoreStatus,
   getGeneralMenu,
+  getAdminOrders,
 };

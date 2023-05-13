@@ -1,85 +1,93 @@
 <%- include("partials/order-header") %>
 
-<secction class="section-review-items-delivery">
+<section class="section-review-items-delivery">
   <div class="container">
-    <div class="review-items-delivery-layout">
-      <div class="items-delivery general-text">
-        <div class="items-layout">
-          <div class="items-text-review">
-            <p>Order items</p>
-          </div>
-          <div class="items-layout-quantity-review">
-            <div class="items-order-review">
-              <div class="items-quantity-review">(1)</div>
-
-              <div class="item-name-review">nutella</div>
-            </div>
-            <div class="items-order-review">
-              <div class="items-quantity-review">(2)</div>
-
-              <div class="item-name-review">peanut butt</div>
-            </div>
-            <div class="items-order-review">
-              <div class="items-quantity-review">(1)</div>
-
-              <div class="item-name-review">biscoff crumble</div>
-            </div>
-          </div>
-          <div class="items-layout-subtotal">
-            <div class="items-subtotal-text">
-              <p>Subtotal: <span>4 Items</span></p>
-              <em>*excluding delivery cost. We'll let you know the delivery
-                cost when we confirm your order</em>
-            </div>
-            <div class="items-subtotal-price"><span>60.000*</span></div>
-          </div>
-        </div>
-
-        <div class="delivery-info">
+    <form action='/submit_order/<%= cartId %>' method="post">
+      <div class="review-items-delivery-layout">
+        <div class="items-delivery general-text">
           <div class="items-layout">
             <div class="items-text-review">
-              <p>Delivery information</p>
+              <p>Order items</p>
             </div>
-            <div class="delivery-info-review">
-              <div class="order-name">
-                <p>Rachel Greene</p>
+
+            <div class="items-layout-quantity">
+              <% orderItems.forEach(info => { %>
+              <div class="items-order">
+                <div class="item-name">(<%= info.quantity %>) <%= info.menu_name %></div>
+                <div class="item-price"><%= info.each_subtotal %></div>
+                <input type="hidden" name="item_id" value="<%= info.id %>">
+                <input type="hidden" name="item_quantity" value="<%= info.quantity %>">
               </div>
-              <div class="order-address">
-                <p>Jl. Pengosekan no. 5</p>
-                <p>Gianyar, 12345</p>
+              <% }) %>
+            </div>
+
+            <div class="items-layout-subtotal">
+              <div class="items-subtotal-text">
+                <p>Subtotal: <span><%= totalQuantity %> Items</span></p>
+                <em>*excluding delivery cost. We'll let you know the delivery
+                  cost when we confirm your order</em>
               </div>
-              <div class="order-phone">
-                <p>+1 765 635 6726</p>
+              <div class="items-subtotal-price"><span><%= totalPrice %>*</span></div>
+              <input type="hidden" name="total_price" value="<%= totalPrice %>">
+            </div>
+          </div>
+
+          <div class="delivery-info">
+            <div class="items-layout">
+              <div class="items-text-review">
+                <p>Delivery information</p>
               </div>
-              <div class="order-time">
-                <p>Delivery between 10:00 & 11:00</p>
+              <div class="delivery-info-review">
+                <div class="order-name">
+                  <p><%= deliveryInfo.customer_name %></p>
+                  <input type="hidden" name="name" value="<%= deliveryInfo.customer_name %>">
+                </div>
+                <div class="order-address">
+                  <p><%= deliveryInfo.delivery_address %></p>
+                  <input type="hidden" name="address" value="<%= deliveryInfo.delivery_address %>">
+                </div>
+                <div class="order-phone">
+                  <p><%= deliveryInfo.phone_number %></p>
+                  <input type="hidden" name="phone" value="<%= deliveryInfo.phone_number %>">
+                </div>
+                <div class="order-email">
+                  <p><%= deliveryInfo.email %></p>
+                  <input type="hidden" name="email" value="<%= deliveryInfo.email %>">
+                </div>
+                <div class="order-time">
+                  <p>Delivery around <%= deliveryInfo.delivery_time %></p>
+                  <input type="hidden" name="time" value="<%= deliveryInfo.delivery_time %>">
+                </div>
+                <div class="order-notes">
+                  <p><%= deliveryInfo.order_notes %></p>
+                  <input type="hidden" name="notes" value="<%= deliveryInfo.order_notes %>">
+
+                </div>
               </div>
+            </div>
+          </div>
+        </div>
+        <div class="right-navigation">
+          <button action="submit" class="btn-frame btn-red">
+            Send order form
+          </button>
+
+          <div class="text">Want to change something?</div>
+
+          <div onclick="returnDeliveryInfo_route(<%= cartId %>)" class="btn-frame">
+            <div class="edit-info">
+              <p>Edit order information</p>
+            </div>
+          </div>
+          <div onclick="returnMenu_route()" class="btn-frame">
+            <div class="edit-info">
+              <p>Restart order</p>
             </div>
           </div>
         </div>
       </div>
-      <div class="right-navigation">
-        <div class="btn-frame btn-red">
-          <div class="send-form-btn">
-            <p>Send order form</p>
-          </div>
-        </div>
-
-        <div class="text">Want to change something?</div>
-
-        <div class="btn-frame">
-          <div class="edit-info">
-            <p>Edit order information</p>
-          </div>
-        </div>
-        <div class="btn-frame">
-          <div class="edit-info">
-            <p>Return to menu</p>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
-  </section>
+  </form>
+</section>
 
-  <%- include("partials/order-footer") %>
+<%- include("partials/order-footer") %>

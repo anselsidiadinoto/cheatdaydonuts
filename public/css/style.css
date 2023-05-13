@@ -475,13 +475,22 @@ body {
   border-left-color: rgb(190, 190, 190);
 }
 .checkoutbtn {
-  background-color: #f5c8c9;
-  padding: 1.2rem 14.5rem;
+  background-color: #f3d3d300;
+  font: inherit;
+  color: inherit;
+  padding: 1.2rem 12.5rem;
   border-radius: 3rem;
   border: solid 0.2rem var(--clr-text-red);
+  transition: 0.4s;
 
   font-size: 2rem;
   font-weight: 300;
+}
+
+.checkoutbtn:hover {
+  background-color: #ffc7c9;
+  border: solid 0.2rem var(--clr-text-red);
+  cursor: pointer;
 }
 
 /* --- REVIEW ITEMS AND DELIVERIY INFORMATION --- */
@@ -510,12 +519,12 @@ body {
   padding: 1.25rem;
 }
 
-.plus-btn {
+/* .plus-btn {
   grid-area: plus-btn;
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 .items-quantity {
   display: flex;
@@ -527,19 +536,26 @@ body {
   font-weight: 400;
 }
 
-.minus-btn {
+/* .minus-btn {
   display: flex;
   grid-area: minus-btn;
   justify-content: center;
   align-items: center;
-}
+} */
 
 .item-name {
   grid-area: name;
-  margin-left: 1.25rem;
+  margin-left: none;
 
   display: flex;
   align-items: center;
+}
+
+.item-price {
+  grid-area: price;
+
+  display: flex;
+  justify-content: flex-end;
 }
 
 .items-order button {
@@ -553,9 +569,9 @@ body {
 
 .items-order {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 15fr;
+  grid-template-columns: 10fr 2fr;
   grid-template-rows: 2.5rem;
-  grid-template-areas: 'plus-btn quantity minus-btn name';
+  grid-template-areas: 'name price';
 }
 
 .items-layout-subtotal {
@@ -595,21 +611,52 @@ body {
   grid-area: address;
 }
 
+.form-whatsapp-phone-label {
+  grid-area: phone_label;
+}
+.form-whatsapp-phone-input {
+  grid-area: phone_input;
+}
+.form-email-input-label {
+  grid-area: email_label;
+}
+.form-email-input {
+  grid-area: email_input;
+}
+.form-delivery-time-label {
+  grid-area: time_label;
+}
+.form-delivery-time-input {
+  grid-area: time_input;
+}
+.form-order-notes {
+  grid-area: order_notes;
+}
+
 .delivery-info-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-areas:
     'name name'
     'address address'
     'address address'
-    'address address';
+    'address address'
+    'phone_label phone_input'
+    'email_label email_input'
+    'time_label time_input'
+    'order_notes order_notes'
+    'order_notes order_notes'
+    'order_notes order_notes'
+    'order_notes order_notes';
 
   gap: 1rem;
   margin-bottom: 8rem;
 }
 
-.delivery-info-form input {
+.delivery-info-form input,
+.delivery-info-form textarea,
+.delivery-info-form select {
   width: 100%;
   height: 100%;
   border: none;
@@ -665,9 +712,32 @@ body {
   border-radius: 3rem;
   background-color: none;
   border: solid 0.2rem var(--clr-text-red);
+  transition: 0.4s;
+
+  font: inherit;
+  color: inherit;
 
   /* background-color: #cfb7b8; */
   width: 100%;
+}
+
+/* .checkoutbtn {
+  background-color: #f3d3d300;
+  font: inherit;
+  color: inherit;
+  padding: 1.2rem 12.5rem;
+  border-radius: 3rem;
+  border: solid 0.2rem var(--clr-text-red);
+  transition: 0.4s;
+
+  font-size: 2rem;
+  font-weight: 300;
+} */
+
+.btn-frame:hover {
+  background-color: #ffc7c9;
+  border: solid 0.2rem var(--clr-text-red);
+  cursor: pointer;
 }
 
 .btn-red {

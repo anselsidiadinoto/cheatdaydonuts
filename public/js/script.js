@@ -195,14 +195,15 @@ function updateCart(updateValue, name, updatePrice, initialQuantity, updateQuant
   
   if (initialQuantity === 0) {
     let cartItemDiv = document.createElement('div');
-    cartItemDiv.id = `cart_item_${item_id}`
-    cartItemContent = `, (${updateQuantity}) ${name}`
-    cartItemDiv.innerHTML = cartItemContent
+    cartItemDiv.id = `cart_item_${item_id}`;
+    cartItemContent = `, (${updateQuantity}) ${name}<input type="hidden" name="menu_id" value="${item_id}"><input type="hidden" name="quantity" value="${updateQuantity}">`;
+    cartItemDiv.innerHTML = cartItemContent;
+  
     document.getElementById('subtotal_items').appendChild(cartItemDiv);
     removeItemComma();
 
   } else if (initialQuantity > 0) {
-    document.getElementById(`cart_item_${item_id}`).innerHTML = `, (${updateQuantity}) ${name}`
+    document.getElementById(`cart_item_${item_id}`).innerHTML = `, (${updateQuantity}) ${name}<input type="hidden" name="menu_id" value="${item_id}"><input type="hidden" name="quantity" value="${updateQuantity}">`
     removeItemComma();
   }
   
@@ -231,4 +232,14 @@ function removeItemComma() {
       '.subtotal-each-items > div:first-child'
     )[0].innerHTML = removedComma;
   }
+}
+
+function returnMenu_route() {
+  if (confirm('Are you sure you want to restart your order?')) {
+    location.href = '/order';
+  }
+}
+
+function returnDeliveryInfo_route(cart_id) {
+  location.href = `/cart/${cart_id}`;
 }

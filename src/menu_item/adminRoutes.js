@@ -19,4 +19,6 @@ adminRouter.post('/general_edit_menu/:page_display/:id',controller.updateMenuIte
 //prettier-ignore
 adminRouter.post('/general_update_store_status', controller.updateStoreStatus);
 
+adminRouter.get('/orders', controller.getAdminOrders);
+
 module.exports = adminRouter;
