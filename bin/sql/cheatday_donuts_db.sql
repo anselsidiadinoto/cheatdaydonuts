@@ -1,3 +1,6 @@
+-- psql -U anselsidiadinoto -d cheatday_donuts < ./bin/sql/cheatday_donuts_db.sql 
+-- POSTGRESS COMMAND TO MAKE DATABASE
+
 DROP TABLE IF EXISTS menu_item CASCADE;
 CREATE TABLE menu_item (
     id SERIAL NOT NULL,
