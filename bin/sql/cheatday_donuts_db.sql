@@ -45,13 +45,22 @@ CREATE TABLE dashboard_store_status (
     open_date VARCHAR(255) NOT NULL,
     menu_display VARCHAR(255),
 
-    CONSTRAINT uc_id_dashbaord_store_status UNIQUE (id),
+    CONSTRAINT uc_id_dashboard_store_status UNIQUE (id),
     CONSTRAINT pk_id_dashboard_store_status PRIMARY KEY (id)
 );
 
     INSERT INTO dashboard_store_status (store_status, open_date, menu_display)
     VALUES
         ('open', 'Saturday, 16 June 2022', 'current'), ('closed', 'Store is currently closed', '');
+
+DROP TABLE IF EXISTS dashboard_order_dates CASCADE;
+CREATE TABLE dashboard_order_dates (
+    id SERIAL NOT NULL,
+    order_dates VARCHAR(255),
+
+    CONSTRAINT uc_id_order_dates UNIQUE (id),
+    CONSTRAINT pk_id_order_dates PRIMARY KEY (id)
+);
 
 
 DROP TABLE IF EXISTS cart CASCADE;
@@ -60,11 +69,12 @@ CREATE TABLE cart (
     cart_status VARCHAR(255) NOT NULL,
     customer_name VARCHAR(255),
     delivery_address TEXT,
-    phone_number BIGINT,
+    phone_number DECIMAL(12,0),
     email VARCHAR(255),
+    delivery_date VARCHAR(255),
     delivery_time VARCHAR(255),
     order_notes TEXT,
-    total_price INT,
+    total_price DECIMAL(12,0),
 
 
     CONSTRAINT uc_id_cart UNIQUE (id),
@@ -91,7 +101,6 @@ CREATE TABLE order_cart (
     -- VALUES
     -- (1, 4, 5), (2, 2, 4), (2, 1, 3), (3, 4, 5), (3, 2, 4), (3, 3, 6);
 
--- SET TIMEZONE='+08';
 DROP TABLE IF EXISTS orders_information CASCADE;
 CREATE TABLE orders_information (
     id SERIAL NOT NULL,
@@ -99,16 +108,19 @@ CREATE TABLE orders_information (
     delivery_address TEXT NOT NULL,
     phone_number BIGINT NOT NULL,
     email VARCHAR(255) NOT NULL,
+    delivery_date VARCHAR(255) NOT NULL,
     delivery_time VARCHAR(255) NOT NULL,
     order_notes TEXT,
-    total_price INT NOT NULL,
-    order_time TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    total_price DECIMAL(12,0) NOT NULL,
+    delivery_cost DECIMAL(12,0) DEFAULT 0,
+    order_time TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     id_order_status INT NOT NULL DEFAULT 1, 
 
 
     CONSTRAINT uc_id_orders_information UNIQUE (id),
     CONSTRAINT pk_id_orders_information PRIMARY KEY (id)
 );
+
 
 DROP TABLE IF EXISTS order_status CASCADE;
 CREATE TABLE order_status (
@@ -154,6 +166,8 @@ ALTER TABLE orders_items ADD CONSTRAINT fk_id_order_item
     FOREIGN KEY(id_menu_item)
     REFERENCES menu_item (id) ON UPDATE CASCADE ON DELETE CASCADE;
 
+ALTER DATABASE cheatday_donuts SET TIMEZONE TO 'Singapore';
+
 ----------------------
 
 CREATE VIEW order_items_review AS
@@ -176,9 +190,29 @@ CREATE VIEW admin_order_items AS
     orders_items.quantity,
     menu_item.menu_price,
     menu_price * quantity AS each_subtotal
-
+    
     FROM orders_items JOIN menu_item
     ON orders_items.id_menu_item = menu_item.id;
+
+CREATE VIEW admin_orders AS
+    SELECT 
+    orders_information.id,
+    orders_information.customer_name,
+    orders_information.delivery_address,
+    orders_information.phone_number,
+    orders_information.email,
+    orders_information.delivery_date,
+    orders_information.delivery_time,
+    orders_information.order_notes,
+    orders_information.total_price,
+    total_price + delivery_cost AS final_price,
+    orders_information.delivery_cost,
+    to_char(orders_information.order_time, 'Dy DD-MM-YYYY HH24:MI') AS order_time,
+    orders_information.id_order_status
+
+    FROM orders_information;
+
+
 
     
 

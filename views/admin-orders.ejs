@@ -28,7 +28,7 @@
               <div class="admin-order-delivery-name-date-items">
                 <div class="admin-order-delivery-name"><%= orders[i].customer_name %></div>
                 <div class="admin-order-delivery-time">
-                  <%= orders[i].order_time %>
+                  <%= orders[i].order_time.toString() %>
                 </div>
                 <div class="admin-order-delivery-items">
 
@@ -49,7 +49,8 @@
                 <div><%= orders[i].delivery_address %></div>
                 <div><%= orders[i].phone_number %></div>
                 <div><%= orders[i].email %></div>
-                <div>Delivery around <%= orders[i].delivery_time %></div>
+                <div><%= orders[i].delivery_date %></div>
+                <div><%= orders[i].delivery_time %></div>
               </div>
               <div class="admin-order-delivery-price">
                 <div class="admin-order-delivery-subtotal">
@@ -57,17 +58,21 @@
                   <div><%= orders[i].total_price %></div>
                 </div>
                 <div class="admin-order-delivery-cost">
-                  <div>Delivery cost:</div>
-                  <div><input type="text" /></div>
+                  <div class="admin-order-delivery-cost-link" onclick="open_deliveryCostModal(<%= orders[i].id %>)">Delivery cost:</div>
+                  <div id="delivery_cost_order_id_<%= orders[i].id %>"><%= orders[i].delivery_cost %></div>
                 </div>
                 <div class="admin-order-delivery-total">
                   <div>Total:</div>
-                  <span>155.000</span>
+                  <span><%=  orders[i].final_price  %></span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="admin-order-invoice">Review invoice</div>
+          <div class="admin-order-invoice">
+            <div>Review invoice</div>
+            <div>Download invoice</div>
+
+          </div>
           <div class="admin-order-status">
             <h4>Order Status</h4>
             <div class="admin-order-status_finalizing-order status-grid">
@@ -99,4 +104,19 @@
     </div>
   </div>
 
+  <section class="orders-modal">
+
+    <div class="admin-order-delivery-cost-modal" id="delivery_cost_modal">
+      <div class="admin-order-delivery-cost-modal-content">
+        <form id="delivery_cost_form" class="admin-delivery-cost-form" method="post" action="/admin/update_delivery_cost/order_id">
+          <div class="delivery-cost-layout-1">Enter delivery cost:</div>
+          <input class="delivery-cost-layout-2 " type="text" id="delivery_cost_input" value="" name="delivery_cost">
+          <button action="submit" class="store-status-layout-5">Update</button>
+          <a onclick="close_deliveryCostModal()" class="store-status-layout-6">Cancel</a>
+        </form>
+
+
+      </div>
+    </div>
+  </section>
   <%- include('partials/admin-footer') %>

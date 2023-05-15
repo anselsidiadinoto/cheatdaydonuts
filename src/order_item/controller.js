@@ -82,6 +82,10 @@ let getOrderCart = async function (req, res) {
       [req.params.cart_id]
     );
 
+    let deliveryDateQuery = await pool.query(
+      'SELECT * FROM dashboard_order_dates'
+    );
+
     let cart_id = req.params.cart_id;
     let total_price = 0;
     let total_quantity = 0;
@@ -98,6 +102,7 @@ let getOrderCart = async function (req, res) {
       totalQuantity: total_quantity,
       cartId: cart_id,
       deliveryInfo: cartDeliveryInfoQuery.rows[0],
+      deliveryDateOptions: deliveryDateQuery.rows,
     });
   } catch (error) {
     console.log(error);
@@ -107,12 +112,13 @@ let getOrderCart = async function (req, res) {
 let addDeliveryInfo = async function (req, res) {
   try {
     await pool.query(
-      'UPDATE cart SET customer_name=$1, delivery_address=$2, phone_number=$3, email=$4, delivery_time=$5, order_notes=$6, total_price=$7 WHERE id=$8',
+      'UPDATE cart SET customer_name=$1, delivery_address=$2, phone_number=$3, email=$4, delivery_date=$5, delivery_time=$6, order_notes=$7, total_price=$8 WHERE id=$9',
       [
         req.body.customer_name,
         req.body.delivery_address,
         req.body.phone,
         req.body.email,
+        req.body.delivery_date,
         req.body.delivery_time,
         req.body.order_notes,
         req.body.total_price,
@@ -160,12 +166,13 @@ let submitOrder = async function (req, res) {
   let orderId;
   try {
     await pool.query(
-      'INSERT INTO orders_information(customer_name, delivery_address, phone_number, email, delivery_time, order_notes, total_price) VALUES($1, $2, $3, $4, $5, $6, $7)',
+      'INSERT INTO orders_information(customer_name, delivery_address, phone_number, email, delivery_date, delivery_time, order_notes, total_price) VALUES($1, $2, $3, $4, $5, $6, $7, $8)',
       [
         req.body.name,
         req.body.address,
         req.body.phone,
         req.body.email,
+        req.body.date,
         req.body.time,
         req.body.notes,
         req.body.total_price,

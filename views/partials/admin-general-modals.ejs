@@ -84,16 +84,44 @@
 
   <div class="admin-store-status-modal-container" id="edit_store_status_modal">
     <div class="admin-store-status-modal-content">
-      <form class="admin-store-status-update-form" method="post" action="/admin/general_update_store_status">
-        <div class="store-status-layout-1">is the store open?</div>
-        <select class="store-status-layout-2" name="store_status_option" id="store_status_option">
-          <option value="open">Yes</option>
-          <option value="closed">No</option>
-        </select>
-        <div class="store-status-layout-3">Open date:</div>
-        <input class="store-status-layout-4" type="text" id="store_date_input" value="<%= storeStatusDate %>" name="store_status_date">
-        <button action="submit" class="store-status-layout-5">Update</button>
-        <a onclick="close_editStoreStatusModal()" class="store-status-layout-6">Cancel</a>
+      <form method="post" action="/admin/general_update_store_status">
+        <div class="admin-store-status-update-form">
+          <div class="store-status-layout-1">Is the store open?</div>
+          <select class="store-status-layout-2" name="store_status_option" id="store_status_option">
+            <option value="open">Yes</option>
+            <option value="closed">No</option>
+          </select>
+          <div class="store-status-layout-3">Open date:</div>
+          <input class="store-status-layout-4" type="text" id="store_date_input" value="<%= storeStatusDate %>" name="store_status_date">
+          <button action="submit" class="store-status-layout-5">Update</button>
+          <a onclick="close_editStoreStatusModal()" class="store-status-layout-6">Cancel</a>
+        </div>
+
+        <div id="store_date_option_container" class="admin-store-status-date-options">
+          <div class="date-options-text">If open, please enter the date options: </div>
+          <div id="date_options_input_values">
+            <% orderDates.forEach((info) => { %>
+            <input type="hidden" value="<%= info.order_dates %>" name="open_date_option">
+            <% }) %>
+          </div>
+          <select id="date_options" class="view-date-options" type="text" value="<%= storeStatusDate %>">
+            <option selected value="">click to see dates</option>
+
+            <% orderDates.forEach((info) => { %>
+            <option value=""><%= info.order_dates %></option>
+            <% }) %>
+
+          </select>
+
+          <input id='input_date_options' class="input-date-options" type="text">
+
+          <a onclick="addDateOption()" class="store-status-layout-6">Add</a>
+          <a onclick="resetDateOptions()" class="store-status-layout-6">Reset</a>
+
+        </div>
+
+
+
       </form>
 
 

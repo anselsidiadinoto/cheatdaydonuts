@@ -13,8 +13,6 @@ const getGeneralMenu = async function (req, res) {
   let dashboardRoute;
   let storeStatus;
 
-  console.log(menuDisplay);
-
   if (menuDisplay === 'current_menu') {
     menuDisplayId = 1;
     dashboardRoute = 'admin-general';
@@ -34,6 +32,10 @@ const getGeneralMenu = async function (req, res) {
       'SELECT * FROM dashboard_store_status ORDER BY id ASC'
     );
 
+    const result_3 = await pool.query(
+      'SELECT * FROM dashboard_order_dates ORDER BY id ASC'
+    );
+
     menuItemsCurrent = results_1.rows;
     storeStatus = results_2.rows[0].store_status;
 
@@ -46,6 +48,7 @@ const getGeneralMenu = async function (req, res) {
     res.render(dashboardRoute, {
       menuItemInfo: menuItemsCurrent,
       storeStatusDate: storeStatusDisplay,
+      orderDates: result_3.rows,
     });
     // --
   } catch (error) {
@@ -54,13 +57,35 @@ const getGeneralMenu = async function (req, res) {
 };
 
 const updateStoreStatus = async function (req, res) {
+  let dateOptions;
+  let insertValues;
+  let values = '';
+
   try {
-    const results_1 = await pool.query(
+    await pool.query(
       'UPDATE dashboard_store_status SET open_date=$1, store_status=$2 WHERE id=1',
       [req.body.store_status_date, req.body.store_status_option]
     );
+    await pool.query('TRUNCATE dashboard_order_dates RESTART IDENTITY CASCADE');
 
-    res.redirect('/admin/general');
+    if (req.body.open_date_option === undefined) {
+      res.redirect('/admin/general');
+    } else {
+      dateOptions = req.body.open_date_option;
+
+      if (typeof dateOptions == 'string') {
+        dateOptions = [req.body.open_date_option];
+      }
+
+      for (let i = 0; i < dateOptions.length; i++) {
+        values += `('${dateOptions[i]}'), `;
+      }
+      insertValues = values.slice(0, -2);
+      await pool.query(
+        `INSERT INTO dashboard_order_dates(order_dates) VALUES${insertValues}`
+      );
+      res.redirect('/admin/general');
+    }
   } catch (error) {
     console.log(error);
   }
@@ -140,7 +165,10 @@ const updateMenuItem = function (req, res) {
 
 const getAdminOrders = async function (req, res) {
   try {
-    let ordersQuery = await pool.query('SELECT * FROM orders_information');
+    let ordersQuery = await pool.query(
+      'SELECT * FROM admin_orders ORDER BY id ASC'
+    );
+
     let itemsQuery = await pool.query('SELECT * FROM admin_order_items');
 
     for (let i = 0; i < ordersQuery.rows.length; i++) {
@@ -152,9 +180,27 @@ const getAdminOrders = async function (req, res) {
       ordersQuery.rows[i].order_items = order_items_array;
     }
 
+    console.log(ordersQuery.rows);
+
     res.render('admin-orders', {
       orders: ordersQuery.rows,
     });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const updateDeliveryCost = async function (req, res) {
+  console.log(req.params.order_id);
+  console.log();
+
+  try {
+    await pool.query(
+      'UPDATE orders_information SET delivery_cost = $1 WHERE id = $2',
+      [req.body.delivery_cost, req.params.order_id]
+    );
+
+    res.redirect('/admin/orders');
   } catch (error) {
     console.log(error);
   }
@@ -169,4 +215,5 @@ module.exports = {
   updateStoreStatus,
   getGeneralMenu,
   getAdminOrders,
+  updateDeliveryCost,
 };

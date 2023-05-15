@@ -18,7 +18,9 @@ adminRouter.get('/general_delete_item/:page_display/:id',controller.deleteMenuIt
 adminRouter.post('/general_edit_menu/:page_display/:id',controller.updateMenuItem);
 //prettier-ignore
 adminRouter.post('/general_update_store_status', controller.updateStoreStatus);
-
+//prettier-ignore
 adminRouter.get('/orders', controller.getAdminOrders);
+//prettier-ignore
+adminRouter.post('/update_delivery_cost/:order_id',controller.updateDeliveryCost);
 
 module.exports = adminRouter;

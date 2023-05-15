@@ -55,7 +55,8 @@
                   <input type="hidden" name="email" value="<%= deliveryInfo.email %>">
                 </div>
                 <div class="order-time">
-                  <p>Delivery around <%= deliveryInfo.delivery_time %></p>
+                  <p>Delivery on <%= deliveryInfo.delivery_date %> around <%= deliveryInfo.delivery_time %></p>
+                  <input type="hidden" name="date" value="<%= deliveryInfo.delivery_date %>">
                   <input type="hidden" name="time" value="<%= deliveryInfo.delivery_time %>">
                 </div>
                 <div class="order-notes">

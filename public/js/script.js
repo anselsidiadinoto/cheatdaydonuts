@@ -85,26 +85,34 @@ function showCurrentMenu_route() {
   location.href = '/admin/general/current_menu';
 }
 
-// ------------ UDPATE STORE OPEND DATE ---------------
+// ------------ ADD NEW DATE OPTION ---------------
 
-// function storeStatusSelection() {
-//   let selectedStatus = document.getElementById('store_status_option_id');
-//   let selectedStatusValue =
-//     selectedStatus.options[selectedStatus.selectedIndex].value;
+function addDateOption() {
+  let dateOption = document.createElement('option');
+  let dateValue = document.createElement('input');
+  let addDate = document.getElementById('input_date_options').value;
+  let insertDate = `<option value="">${addDate}</option>`;
 
-//   let dateInputStyle = document.getElementById('store_date_input').style;
-//   // console.log(dateInputStyle);
+  dateValue.type = 'hidden';
+  dateValue.value = addDate;
+  dateValue.name = 'open_date_option';
 
-//   if ((selectedStatusValue = 'no')) {
-//     dateInputStyle.color = 'grey';
-//     dateInputStyle.textDecoration = 'line-through';
-//     dateInputStyle.backgroundColor = '#ffffff92';
-//   } else if ((selectedStatusValue = 'yes')) {
-//     dateInputStyle.color = 'black';
-//     dateInputStyle.textDecoration = 'none';
-//     dateInputStyle.backgroundColor = '#fff';
-//   }
-// }
+  dateOption.innerHTML = insertDate;
+
+  document.getElementById('date_options').appendChild(dateOption);
+  document.getElementById('date_options_input_values').appendChild(dateValue);
+
+  document.getElementById('input_date_options').value = '';
+}
+
+function resetDateOptions() {
+  document.getElementById('date_options').innerHTML = '';
+  document.getElementById('date_options_input_values').innerHTML = '';
+  let dateOption = document.createElement('option');
+  let insertDate = `<option value="">click to see dates</option>`;
+  dateOption.innerHTML = insertDate;
+  document.getElementById('date_options').appendChild(dateOption);
+}
 
 // ----------- ORDER PAGE START MENU ----------------
 
@@ -242,4 +250,18 @@ function returnMenu_route() {
 
 function returnDeliveryInfo_route(cart_id) {
   location.href = `/cart/${cart_id}`;
+}
+
+// -------------- ADMIN ORDERS -----------------
+
+function open_deliveryCostModal(order_id) {
+  document.getElementById('delivery_cost_modal').style.display = 'block';
+  document.getElementById(
+    'delivery_cost_form'
+  ).action = `/admin/update_delivery_cost/${order_id}`;
+  console.log(order_id);
+}
+
+function close_deliveryCostModal() {
+  document.getElementById('delivery_cost_modal').style.display = 'none';
 }
