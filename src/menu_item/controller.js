@@ -180,8 +180,6 @@ const getAdminOrders = async function (req, res) {
       ordersQuery.rows[i].order_items = order_items_array;
     }
 
-    console.log(ordersQuery.rows);
-
     res.render('admin-orders', {
       orders: ordersQuery.rows,
     });
@@ -206,6 +204,27 @@ const updateDeliveryCost = async function (req, res) {
   }
 };
 
+const getOrderInvoice = async function (req, res) {
+  try {
+    let ordersQuery = await pool.query(
+      'SELECT * FROM admin_orders WHERE id=$1',
+      [req.params.order_id]
+    );
+
+    let itemsQuery = await pool.query(
+      'SELECT * FROM admin_order_items WHERE id_order=$1',
+      [req.params.order_id]
+    );
+
+    res.render('admin-orders-invoice', {
+      orders: ordersQuery.rows,
+      items: itemsQuery.rows,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   addMenuItem,
   deleteMenuItem,
@@ -216,4 +235,5 @@ module.exports = {
   getGeneralMenu,
   getAdminOrders,
   updateDeliveryCost,
+  getOrderInvoice,
 };

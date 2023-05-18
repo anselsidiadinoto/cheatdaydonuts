@@ -61,11 +61,17 @@
             </button>
             <button onclick="delete_route(<%= info.id %>)" class="admin-menu-item-delete-btn">Delete</button>
           </div>
-          <div class="admin-menu-item-image-upload">
-            <button class="admin-menu-item-image-upload-btn">
+          <!-- <div class="admin-menu-item-image-upload"> -->
+
+          <form class="admin-menu-item-image-upload" method="post" action="/admin/upload/menu_image" enctype="multipart/form-data">
+            <input type="file" name="img">
+            <button action="submit">submit</button>
+          </form>
+
+          <!-- <button class="admin-menu-item-image-upload-btn">
               Upload new image
-            </button>
-          </div>
+            </button> -->
+          <!-- </div> -->
         </div>
       </div>
 

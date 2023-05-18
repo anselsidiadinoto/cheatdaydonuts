@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;700&display=swap" rel="stylesheet" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;0,800;1,400;1,500;1,700;1,800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/../css/style.css" />
+
+  <title>Cheatday</title>
+</head>
+
+<body>
+
+  <div class="admin-invoice-all-center">
+
+    <div class="admin-invoice-all-container">
+      <div class="admin-invoice-title">
+        invoice
+      </div>
+      <div class="admin-client-delivery-container">
+        <div class="admin-invoice-client-name">
+          <div>CLIENT</div>
+          <span><%= orders[0].customer_name.toUpperCase() %></span>
+        </div>
+        <div class="admin-invoice-delivery-date">
+          <div>DELIVERY DATE</div>
+          <div><%= orders[0].delivery_date %></div>
+        </div>
+      </div>
+
+      <div class="admin-invoice-container">
+        <div class="admin-invoice-headers">
+          <div class="invoice-header-item">ITEM</div>
+          <div class="invoice-header-price">PRICE</div>
+          <div class="invoice-header-quantity">QUANTITY</div>
+          <div class="invoice-header-total">TOTAL</div>
+        </div>
+        <div class="invoice-items-container">
+
+          <% items.forEach((info) => { %>
+
+          <div class="invoice-items">
+            <div class="invoice-item-name"><%= info.menu_name %></div>
+            <div class="invoice-item-price">
+              <div>Rp.</div>
+              <div><%= info.menu_price %></div>
+            </div>
+            <div class="invoice-item-quantity">2</div>
+            <div class="invoice-item-total">
+              <div>Rp.</div>
+              <div><%= info.each_subtotal%></div>
+            </div>
+          </div>
+
+          <% }) %>
+
+        </div>
+
+        <div class="invoice-order-notes">
+          <div class="invoice-order-notes-text">Notes</div>
+          <div class="invoice-order-notes-description"><%= orders[0].order_notes %></div>
+          <div></div>
+
+        </div>
+
+
+        <div class="invoice-delivery-fee">
+          <div class="invoice-delivery-fee-text">Delivery Fee</div>
+          <div class="invoice-delivery-fee-description">
+            <div>GoSend to :</div>
+            <div><%= orders[0].delivery_address %></div>
+          </div>
+          <div class="invoice-delivery-fee-price">
+            <div>Rp.</div>
+            <div><%= orders[0].delivery_cost %></div>
+          </div>
+        </div>
+        <div class="invoice-total">
+          <div></div>
+          <div class="grand-total-text">GRAND TOTAL</div>
+          <div class="grand-total-price">
+            <div>Rp.</div>
+            <div><%= orders[0].final_price %></div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="admin-invoice-payment-info">
+        <span>Payment information</span>
+        <div></div>
+        <div>Bank</div>
+        <div>: BCA</div>
+        <div>Branch</div>
+        <div>: KCP UBUD</div>
+        <div>Account Number</div>
+        <div>: 1350658374</div>
+        <div>Account Name</div>
+        <div>: Astrid Susanto</div>
+      </div>
+
+      <div class="invoice-slogan">
+        <div>HAVE A LOVELY</div>
+        <img src="/img/cheatday_logo_2.png" alt="">
+      </div>
+
+
+      <div class="invoice-social-media-container">
+        <div class="invoice-find-us">FIND US</div>
+        <div class="invoice-social-media">
+          <div>
+            <div class="social-media-facebook ">
+              <ion-icon name="logo-facebook"></ion-icon>
+              <div>Cheat Day</div>
+            </div>
+            <div class="social-media-instagram ">
+              <ion-icon name="logo-instagram"></ion-icon>
+              <div>@Cheatday_bali</div>
+            </div>
+          </div>
+          <div>
+            <div class="social-media-phone ">
+              <ion-icon name="call-outline"></ion-icon>
+              <div>081807256332</div>
+            </div>
+            <div class="social-media-mail ">
+              <ion-icon name="mail-outline"></ion-icon>
+              <div>cheatdaybali@gmail.com</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="/../js/script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

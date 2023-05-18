@@ -1,13 +1,31 @@
 -- psql -U anselsidiadinoto -d cheatday_donuts < ./bin/sql/cheatday_donuts_db.sql 
 -- POSTGRESS COMMAND TO MAKE DATABASE
 
+
+DROP TABLE IF EXISTS admin_account;
+CREATE TABLE admin_account (
+    id SERIAL NOT NULL,
+    admin_name VARCHAR(255) NOT NULL,
+    admin_password VARCHAR(256) NOT NULL,
+
+    CONSTRAINT pk_admin_account PRIMARY KEY (id),
+    CONSTRAINT uc_id_admin_account UNIQUE (id)
+);
+
+    INSERT INTO admin_account 
+        (admin_name, admin_password)
+    VALUES
+        ('astridchu', 'pupui');
+
 DROP TABLE IF EXISTS menu_item CASCADE;
 CREATE TABLE menu_item (
     id SERIAL NOT NULL,
     menu_name VARCHAR(255) NOT NULL,
     menu_description TEXT NOT NULL,
     menu_price DECIMAL(8,0) NOT NULL,
+    menu_img_url TEXT,
     id_menu_item_status INT NOT NULL DEFAULT 1,
+
 
     CONSTRAINT pk_menu_item PRIMARY KEY (id),
     CONSTRAINT uc_id_menu_item UNIQUE (id)
