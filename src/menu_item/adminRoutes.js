@@ -7,6 +7,7 @@ const fs = require('fs');
 const adminRouter = Router();
 
 // --------------- POSTGRESS SESSION ---------------
+
 const session = require('express-session');
 require('dotenv').config({ path: __dirname + '/../../.env' });
 
@@ -16,6 +17,8 @@ const pgSessionConnectionObj = {
   database: process.env.DB_DATABASE,
   password: process.env.DB_PASSWORD,
 };
+
+console.log(pgSessionConnectionObj);
 
 // const conString = process.env.CONNECTION_STRING;
 // const pgSessionConnectionObj = conString;
