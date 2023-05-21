@@ -32,7 +32,7 @@ const pgStoreConfig = {
 adminRouter.use(
   session({
     store: new pgSession(pgStoreConfig),
-    secret: 'cat keyboard',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     proxy: true,

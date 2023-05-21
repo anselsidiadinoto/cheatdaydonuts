@@ -15,7 +15,8 @@ CREATE TABLE admin_account (
     INSERT INTO admin_account 
         (admin_name, admin_password)
     VALUES
-        ('astridchu', 'pupui');
+        ('astridchu', 'pupui')
+        ('anselj', 'kimi');
 
 DROP TABLE IF EXISTS menu_item CASCADE;
 CREATE TABLE menu_item (

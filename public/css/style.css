@@ -45,6 +45,10 @@ a {
   color: inherit;
 }
 
+button {
+  background-color: rgba(255, 255, 255, 0);
+}
+
 a:visited,
 a:active,
 a:focus {
@@ -67,6 +71,21 @@ body {
   font-weight: 400;
   color: var(--clr-text-red);
   background-color: var(--clr-background);
+}
+
+textarea,
+input,
+select {
+  font-size: 1.5rem;
+}
+
+select {
+  background-color: #ffffff;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position-x: 100%;
+  background-position-y: 5px;
 }
 
 .container {
@@ -913,8 +932,9 @@ body {
   gap: 1rem;
 }
 
-.admin-sort-options {
-  /* height: 100%; */
+.admin-sort-options select {
+  width: 10rem;
+  padding-left: 0.5rem;
 }
 
 .admin-sort-options select {
@@ -987,6 +1007,7 @@ body {
   grid-template-rows: 1fr 2.5fr 1fr 0.5fr;
   border: solid 0.1rem #d09497;
   grid-gap: 1rem;
+  height: 27rem;
 
   grid-template-areas:
     'name img-text img-frame'
