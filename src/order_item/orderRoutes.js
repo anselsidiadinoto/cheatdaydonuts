@@ -3,6 +3,8 @@ const controller = require('./controller');
 
 const orderRouter = Router();
 
+orderRouter.get('/', controller.getOrderStart);
+
 orderRouter.get('/order', controller.getOrderStart);
 
 orderRouter.post('/order_add_cart', controller.addCart);
