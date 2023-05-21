@@ -20,7 +20,7 @@ require('dotenv').config({ path: __dirname + '/../../.env' });
 
 const conString = process.env.CONNECTION_STRING;
 
-const pgSessionConnectionObj = { conString };
+const pgSessionConnectionObj = conString;
 
 const pgSession = require('connect-pg-simple')(session);
 const pgStoreConfig = {
