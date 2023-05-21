@@ -20,19 +20,15 @@ require('dotenv').config({ path: __dirname + '/../../.env' });
 //   ssl: true,
 // };
 
-const conString = process.env.CONNECTION_STRING;
+const conString = process.env.DATABASE_URL;
 // const pgSessionConnectionObj = conString;ser
 
 const pgSession = require('connect-pg-simple')(session);
 const pgStoreConfig = {
   connectionString: conString,
   createTableIfMissing: true,
-  ssl: { sslmode: 'require', rejectUnauthorized: false },
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false,
-    },
+  ssl: {
+    rejectUnauthorized: false,
   },
 };
 
