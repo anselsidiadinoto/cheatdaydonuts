@@ -27,7 +27,7 @@ const pgSession = require('connect-pg-simple')(session);
 const pgStoreConfig = {
   connectionString: conString,
   createTableIfMissing: true,
-  ssl: true,
+  ssl: { sslmode: 'require', rejectUnauthorized: false },
   dialectOptions: {
     ssl: {
       require: true,

@@ -5,7 +5,7 @@ const conString = process.env.DB_CONNECTION_STRING;
 
 const pool = new Pool({
   connectionString: conString,
-  ssl: true,
+  ssl: { sslmode: 'require', rejectUnauthorized: false },
   dialectOptions: {
     ssl: {
       require: true,
