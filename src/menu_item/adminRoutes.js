@@ -17,6 +17,7 @@ const pgSessionConnectionObj = {
   database: process.env.DB_DATABASE,
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT,
+  ssl: true,
 };
 
 // const conString = process.env.CONNECTION_STRING;
