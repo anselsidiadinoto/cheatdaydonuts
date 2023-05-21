@@ -59,24 +59,24 @@
                 </div>
                 <div class="form-delivery-date-input">
                   <!-- <input name='delivery-time' type="time" placeholder="13:00" /> -->
-                  <select name="delivery_date" id="delivery_date">
-                    <option selected value="<%= deliveryInfo.delivery_date %>"> <%= deliveryInfo.delivery_date %></option>
+                  <select name="delivery_date_info" id="delivery_date">
+                    <option selected value='{"value":"<%= deliveryInfo.id_delivery_date %>" , "date":"<%= deliveryInfo.delivery_date %>"}'> <%= deliveryInfo.delivery_date %></option>
                     <% deliveryDateOptions.forEach((info) => { %>
-                    <option value="<%= info.order_dates %>"><%= info.order_dates %></option>
+                    <option value='{"value":"<%= info.id %>" , "date":"<%= info.order_dates %>"}'><%= info.order_dates %></option>
                     <% }) %>
 
                   </select>
 
                 </div>
-                <div class="form-delivery-time-label">
+                <div class=" form-delivery-time-label">
                   <label for="delivery_time">Delivery time:</label>
                 </div>
                 <div class="form-delivery-time-input">
                   <!-- <input name='delivery-time' type="time" placeholder="13:00" /> -->
                   <select name="delivery_time" id="delivery-time">
                     <option selected value="<%= deliveryInfo.delivery_time %>"> <%= deliveryInfo.delivery_time %></option>
-                    <option value="8:00">8:00</option>
-                    <option value="9:00">9:00</option>
+                    <option value="08:00">08:00</option>
+                    <option value="09:00">09:00</option>
                     <option value="10:00">10:00</option>
                     <option value="11:00">11:00</option>
                     <option value="12:00">12:00</option>

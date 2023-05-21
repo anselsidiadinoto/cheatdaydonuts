@@ -15,7 +15,9 @@
               <div class="items-order">
                 <div class="item-name">(<%= info.quantity %>) <%= info.menu_name %></div>
                 <div class="item-price"><%= info.each_subtotal %></div>
+                <input type="hidden" name="item_name" value="<%= info.menu_name %>">
                 <input type="hidden" name="item_id" value="<%= info.id %>">
+                <input type="hidden" name="item_price" value="<%= info.menu_price %>">
                 <input type="hidden" name="item_quantity" value="<%= info.quantity %>">
               </div>
               <% }) %>
@@ -56,6 +58,7 @@
                 </div>
                 <div class="order-time">
                   <p>Delivery on <%= deliveryInfo.delivery_date %> around <%= deliveryInfo.delivery_time %></p>
+                  <input type="hidden" name="date_id" value="<%= deliveryInfo.id_delivery_date %>">
                   <input type="hidden" name="date" value="<%= deliveryInfo.delivery_date %>">
                   <input type="hidden" name="time" value="<%= deliveryInfo.delivery_time %>">
                 </div>

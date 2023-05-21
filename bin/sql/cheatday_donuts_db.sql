@@ -226,7 +226,7 @@ ALTER TABLE orders_information ADD CONSTRAINT fk_id_order_status
     REFERENCES order_status(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
-ALTER DATABASE cheatday_donuts SET TIMEZONE TO 'Singapore';
+ALTER DATABASE ptnknldr SET TIMEZONE TO 'Singapore';
 
 ----------------------
 

@@ -66,7 +66,8 @@ const updateStoreStatus = async function (req, res) {
       'UPDATE dashboard_store_status SET open_date=$1, store_status=$2 WHERE id=1',
       [req.body.store_status_date, req.body.store_status_option]
     );
-    await pool.query('TRUNCATE dashboard_order_dates RESTART IDENTITY CASCADE');
+
+    await pool.query('TRUNCATE dashboard_order_dates RESTART IDENTITY');
 
     if (req.body.open_date_option === undefined) {
       res.redirect('/admin/general');
@@ -188,6 +189,128 @@ const getAdminOrders = async function (req, res) {
   }
 };
 
+const sortAdminOrder = async function (req, res) {
+  try {
+    let sort_value = req.body.sort_option;
+    let ordersQuery;
+    let itemsQuery;
+
+    if (sort_value == 1) {
+      ordersQuery = await pool.query(
+        'SELECT * FROM admin_orders WHERE status_id=1 ORDER BY id ASC'
+      );
+    } else if (sort_value == 2) {
+      ordersQuery = await pool.query(
+        'SELECT * FROM admin_orders WHERE status_id=1 ORDER BY date_value ASC, delivery_time ASC'
+      );
+    }
+
+    itemsQuery = await pool.query('SELECT * FROM admin_order_items');
+
+    for (let i = 0; i < ordersQuery.rows.length; i++) {
+      let query_order_id = ordersQuery.rows[i].id;
+      let all_order_items = itemsQuery.rows;
+      let order_items_array = all_order_items.filter((item) => {
+        return item.id_order === query_order_id;
+      });
+      ordersQuery.rows[i].order_items = order_items_array;
+    }
+
+    // console.log(ordersQuery);
+    res.render('admin-orders', {
+      orders: ordersQuery.rows,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const sortAdminOrderCompleted = async function (req, res) {
+  try {
+    let sort_value = req.body.sort_option;
+    let ordersQuery;
+    let itemsQuery;
+
+    if (sort_value == 1) {
+      ordersQuery = await pool.query(
+        'SELECT * FROM admin_orders WHERE status_id=2 ORDER BY id ASC'
+      );
+    } else if (sort_value == 2) {
+      ordersQuery = await pool.query(
+        'SELECT * FROM admin_orders WHERE status_id=2 ORDER BY date_value ASC, delivery_time ASC'
+      );
+    }
+
+    itemsQuery = await pool.query('SELECT * FROM admin_order_items');
+
+    for (let i = 0; i < ordersQuery.rows.length; i++) {
+      let query_order_id = ordersQuery.rows[i].id;
+      let all_order_items = itemsQuery.rows;
+      let order_items_array = all_order_items.filter((item) => {
+        return item.id_order === query_order_id;
+      });
+      ordersQuery.rows[i].order_items = order_items_array;
+    }
+
+    // console.log(ordersQuery);
+    res.render('admin-orders-completed', {
+      orders: ordersQuery.rows,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getOrdersCurrent = async function (req, res) {
+  try {
+    let ordersQuery = await pool.query(
+      'SELECT * FROM admin_orders WHERE status_id=1 ORDER BY id ASC'
+    );
+
+    let itemsQuery = await pool.query('SELECT * FROM admin_order_items');
+
+    for (let i = 0; i < ordersQuery.rows.length; i++) {
+      let query_order_id = ordersQuery.rows[i].id;
+      let all_order_items = itemsQuery.rows;
+      let order_items_array = all_order_items.filter((item) => {
+        return item.id_order === query_order_id;
+      });
+      ordersQuery.rows[i].order_items = order_items_array;
+    }
+
+    res.render('admin-orders', {
+      orders: ordersQuery.rows,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getOrdersCompleted = async function (req, res) {
+  try {
+    let ordersQuery = await pool.query(
+      'SELECT * FROM admin_orders WHERE status_id=2 ORDER BY id ASC'
+    );
+
+    let itemsQuery = await pool.query('SELECT * FROM admin_order_items');
+
+    for (let i = 0; i < ordersQuery.rows.length; i++) {
+      let query_order_id = ordersQuery.rows[i].id;
+      let all_order_items = itemsQuery.rows;
+      let order_items_array = all_order_items.filter((item) => {
+        return item.id_order === query_order_id;
+      });
+      ordersQuery.rows[i].order_items = order_items_array;
+    }
+
+    res.render('admin-orders-completed', {
+      orders: ordersQuery.rows,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const updateDeliveryCost = async function (req, res) {
   console.log(req.params.order_id);
   console.log();
@@ -198,7 +321,7 @@ const updateDeliveryCost = async function (req, res) {
       [req.body.delivery_cost, req.params.order_id]
     );
 
-    res.redirect('/admin/orders');
+    res.redirect('/admin/orders/current');
   } catch (error) {
     console.log(error);
   }
@@ -225,6 +348,111 @@ const getOrderInvoice = async function (req, res) {
   }
 };
 
+const completeOrder = async function (req, res) {
+  try {
+    await pool.query(
+      'UPDATE orders_information SET id_order_status=2 WHERE id=$1',
+      [req.params.order_id]
+    );
+
+    res.redirect('/admin/orders/current');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const reactivateOrder = async function (req, res) {
+  try {
+    await pool.query(
+      'UPDATE orders_information SET id_order_status=1 WHERE id=$1',
+      [req.params.order_id]
+    );
+
+    res.redirect('/admin/orders/completed');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const overview = async function (req, res) {
+  try {
+    let query_2 = await pool.query(
+      'SELECT * FROM admin_orders WHERE status_id=1 ORDER BY id ASC'
+    );
+
+    let query_3 = await pool.query(
+      'SELECT * FROM admin_orders_summary WHERE status_id=1 ORDER BY item_id ASC'
+    );
+
+    const results_2 = await pool.query(
+      'SELECT * FROM dashboard_store_status ORDER BY id ASC'
+    );
+
+    storeStatus = results_2.rows[0].store_status;
+
+    if (storeStatus === 'open') {
+      storeStatusDisplay = results_2.rows[0].open_date;
+    } else if (storeStatus === 'closed') {
+      storeStatusDisplay = results_2.rows[1].open_date;
+    }
+
+    let total_orders = query_2.rows.length;
+    let total_donuts = 0;
+
+    for (let i = 0; i < query_3.rows.length; i++) {
+      total_donuts += query_3.rows[i].quantity;
+    }
+
+    let donut_data = query_3.rows;
+    let donut_total_each = donut_data,
+      donut_grouped = Array.from(
+        donut_total_each
+          .reduce(
+            (m, { menu_name, quantity }) =>
+              m.set(menu_name, (m.get(menu_name) || 0) + quantity),
+            new Map()
+          )
+          .entries(),
+        ([menu_name, quantity]) => ({ menu_name, quantity })
+      );
+
+    console.log(donut_grouped);
+
+    res.render('admin-orders-overview', {
+      totalOrders: total_orders,
+      totalDonuts: total_donuts,
+      eachDonuts: donut_grouped,
+      storeStatusDate: storeStatusDisplay,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const deleteOrderCurrent = async function (req, res) {
+  try {
+    await pool.query('DELETE FROM admin_orders WHERE id=$1', [
+      req.params.order_id,
+    ]);
+
+    res.redirect('/admin/orders/current');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const deleteOrderCompleted = async function (req, res) {
+  try {
+    await pool.query('DELETE FROM admin_orders WHERE id=$1', [
+      req.params.order_id,
+    ]);
+
+    res.redirect('/admin/orders/completed');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   addMenuItem,
   deleteMenuItem,
@@ -236,4 +464,13 @@ module.exports = {
   getAdminOrders,
   updateDeliveryCost,
   getOrderInvoice,
+  sortAdminOrder,
+  sortAdminOrderCompleted,
+  getOrdersCurrent,
+  getOrdersCompleted,
+  completeOrder,
+  reactivateOrder,
+  overview,
+  deleteOrderCurrent,
+  deleteOrderCompleted,
 };

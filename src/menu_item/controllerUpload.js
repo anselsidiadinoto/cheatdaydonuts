@@ -35,10 +35,36 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage: storage });
 
 // ------------ UPLOAD ROUTE ----------------
-//prettier-ignore
-const uploadMenuImage = uploadRouter.post('/menu_image', upload.single('img'), function (req, res) {
-  console.log(req.file);
-  res.redirect(req.file.path)
+
+const uploadMenuImage = uploadRouter.post(
+  '/menu_image/:menu_id/',
+  upload.single('img'),
+  async function (req, res) {
+    try {
+      let current_image_public_id = req.body.image_id;
+
+      const menu_id = req.params.menu_id;
+      const image_public_id = req.file.filename;
+      const image_url = req.file.path;
+
+      if (current_image_public_id == null) {
+        return;
+      } else {
+        cloudinary.uploader.destroy(
+          current_image_public_id,
+          function (error, result) {}
+        );
+      }
+
+      await pool.query(
+        'UPDATE menu_item SET menu_img_public_id=$1, menu_img_url=$2 WHERE id=$3',
+        [image_public_id, image_url, menu_id]
+      );
+
+      res.redirect('/admin/general');
+    } catch (error) {
+      console.log(error);
+    }
   }
 );
 

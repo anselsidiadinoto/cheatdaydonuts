@@ -1,4 +1,4 @@
-<%- include('partials/admin-header') %>
+<%- include('partials/admin-header-general') %>
 
 <section class="section-general-header">
   <div onclick="open_editStoreStatusModal()" class="container">
@@ -46,7 +46,10 @@
             <div class="admin-menu-item-number"><%= info.id %></div>
           </div>
           <div class="admin-menu-item-image-text">Image preview:</div>
-          <div class="admin-menu-item-image-frame"></div>
+          <div class="admin-menu-item-image-frame">
+            <img src="<%= info.menu_img_url %>" alt="">
+
+          </div>
 
 
           <div class="admin-menu-item-buttons">
@@ -60,11 +63,14 @@
             </button>
             <button onclick="delete_route_inactive(<%= info.id %>)" class="admin-menu-item-delete-btn">Delete</button>
           </div>
-          <div class="admin-menu-item-image-upload">
-            <button class="admin-menu-item-image-upload-btn">
-              Upload new image
-            </button>
-          </div>
+          <form id="image-upload-<%= info.id %>" class="admin-menu-item-image-upload" method="post" action="/admin/upload/menu_image/<%= info.id %>" enctype="multipart/form-data">
+            <label for="image-input-<%= info.id %>">
+              <input id="image-input-<%= info.id %>" type="file" name="img">
+              Image
+              <input type="hidden" name="image_id" value="<%= info.menu_img_public_id %>">
+            </label>
+            <button form="image-upload-<%= info.id %>" action="submit">Update</button>
+          </form>
         </div>
       </div>
 

@@ -13,6 +13,10 @@ window.onload = function startScript() {
     console.log('this link is inactive menu');
     menu_tab = 'inactive_menu';
   }
+
+  if (performance.navigation.type == 2) {
+    location.reload(true);
+  }
 };
 
 // ------------ MODAL CRUD ---------------
@@ -27,6 +31,18 @@ function toggle_visibility(modal_id) {
 function delete_route(item_id) {
   if (confirm('Are you sure you want to delete this item?')) {
     location.href = `/admin/general_delete_item/${menu_tab}/${item_id}`;
+  }
+}
+
+function delete_order_current(order_id) {
+  if (confirm('Are you sure you want to delete this order?')) {
+    location.href = `/admin/orders/current/delete_order/${order_id}`;
+  }
+}
+
+function delete_order_completed(order_id) {
+  if (confirm('Are you sure you want to delete this order?')) {
+    location.href = `/admin/orders/completed/delete_order/${order_id}`;
   }
 }
 

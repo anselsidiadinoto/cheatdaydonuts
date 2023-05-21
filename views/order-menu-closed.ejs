@@ -11,15 +11,12 @@
 
       <div class="delivery-date-box">
         <div class="delivery-date-text text-main">
-          <p>We are ready to make and deliver donuts on:</p>
           <p class="date"><%= storeStatusDate %></p>
         </div>
       </div>
       <div class="order-description-info text-main">
         <p>
-          Please select our available donuts below along with your contact
-          information, then submit the order form. Once received, we will
-          confirm your order and and payment information.
+          We're sorry we missed you! We'll be open again soon, in the mean time do checkout our instagram for our latest vegan donuts. Stay tuned ~ feel free to chat us too!
         </p>
       </div>
     </div>
@@ -59,21 +56,8 @@
               <div class="items-order-menu-page">
                 <div class="order-plus-minus-frame">
 
-                  <div class="minus-btn">
-                    <button onclick="removeItemFromCart(<%= info.id %>)">-</button>
-                  </div>
-                  <div class="items-quantity" id="item_quantity_<%= info.id %>">0</div>
-                  <div class="plus-btn">
-                    <button onclick="addItemToCart(<%= info.id %>)">+</button>
-                  </div>
-
                 </div>
 
-                <!-- <div class="addbtn-frame">
-                  <div class="addbtn-text">
-                    <p>Add</p>
-                  </div>
-                </div> -->
               </div>
             </div>
         </li>
@@ -86,38 +70,6 @@
   </div>
 </section>
 
-<section class="subtotal-checkout">
-  <div class="container">
-    <form action="/order_add_cart" method="post">
-
-      <div class="subtotal-checkout-layout">
-        <div class="subtotal-frame">
-          <div class="subtotal-all-items">
-            <div class="subtotal-all-text">
-              <div>Subtotal:</div>
-              <div class="subtotal_all_quantity" id="subtotal_items_quantity">0</div>
-              <span>items</span>
-            </div>
-            <div class="subtotal-price" id="subtotal_items_price">
-
-            </div>
-          </div>
-
-          <div class="subtotal-each-items" id="subtotal_items">
-          </div>
-        </div>
-
-        <div class="checkoutbtn-frame">
-          <button class="checkoutbtn">
-            Checkout
-          </button>
-        </div>
-
-      </div>
-    </form>
-
-  </div>
-</section>
 
 
 <%- include("partials/order-footer") %>

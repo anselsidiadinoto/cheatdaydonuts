@@ -7,13 +7,13 @@
       <div class="admin-overview-order admin-btn-inactive">
         <a href="/admin/orders/overview">Overview</a>
       </div>
-      <div class="admin-current-order admin-btn-active">
+      <div class="admin-current-order admin-btn-inactive">
         <a href="/admin/orders/current">Current orders</a>
       </div>
-      <div class="admin-completed-order admin-btn-inactive">
+      <div class="admin-completed-order admin-btn-active">
         <a href="/admin/orders/completed">Completed</a>
       </div>
-      <form action="/admin/orders/sort" method="post" id="form-sort" class="admin-sort">
+      <form action="/admin/orders/sort_completed" method="post" id="form-sort" class="admin-sort">
         <button for="form-sort" action="submit">Sort:</button>
         <div class="admin-sort-options">
           <select name="sort_option" id="">
@@ -24,8 +24,6 @@
         </div>
       </form>
     </div>
-
-
   </div>
   </div>
 </section>
@@ -88,10 +86,10 @@
           </div>
           <div class="admin-order-invoice">
             <a href="/admin/orders/invoice/<%= orders[i].id %>" target="_blank">Review invoice</a>
-            <form id="complete_order_<%= orders[i].id %>" action="/admin/orders/complete_order/<%= orders[i].id %>" method="post">
-              <button class="admin-order-form-complete-btn" for="complete_order_<%= orders[i].id %>" action="submit"> Complete order</button>
+            <form id="reactivate_order_<%= orders[i].id %>" action="/admin/orders/reactivate_order/<%= orders[i].id %>" method="post">
+              <button class="admin-order-form-complete-btn" for="reactivate_order_<%= orders[i].id %>" action="submit">Reactivate order</button>
             </form>
-            <button onclick="delete_order_current(<%= orders[i].id %>)">Delete order</button>
+            <button onclick="delete_order_completed(<%= orders[i].id %>)">Delete order</button>
           </div>
           <!-- <div class="admin-order-status">
             <h4>Order Status</h4>

@@ -23,8 +23,6 @@ const adminRegister = function (req, res) {
 const addNewAdmin = async function (req, res) {
   let { admin_user, admin_password } = req.body;
 
-  console.log(admin_user, admin_password);
-
   let errors = [];
 
   if (!admin_user || !admin_password) {

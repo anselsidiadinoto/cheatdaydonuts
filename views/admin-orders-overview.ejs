@@ -1,0 +1,51 @@
+<%- include('partials/admin-header-orders') %>
+
+
+<section class="section-admin-order">
+  <div class="container">
+    <div class="admin-order-nav">
+      <div class="admin-overview-order admin-btn-active">
+        <a href="/admin/orders/overview">Overview</a>
+      </div>
+      <div class="admin-current-order admin-btn-inactive">
+        <a href="/admin/orders/current">Current orders</a>
+      </div>
+      <div class="admin-completed-order admin-btn-inactive">
+        <a href="/admin/orders/completed">Completed</a>
+      </div>
+
+    </div>
+
+
+  </div>
+  </div>
+</section>
+
+<section class="admin-orders-overview">
+  <div class="overview-container">
+    <div class="overview-batch-description">
+      <div>For the next order batch of</div>
+      <span><%= storeStatusDate %>,</span>
+    </div>
+    <div class="overview-order-quantity">Cheatday has (<span><%= totalOrders %></span>) orders with a total of (<span><%= totalDonuts %></span>) donuts
+
+    </div>
+
+    <div class="overview-donut-summary">
+      <div class="overview-donut-summary-title">Here is the summary of the orders: </div>
+      <div class="overview-donut-container-admin">
+        <% eachDonuts.forEach((info) => { %>
+        <div class="overview-donut-items">(<%= info.quantity %>) <%= info.menu_name %> </div>
+        <% }) %>
+      </div>
+    </div>
+
+  </div>
+
+
+</section>
+
+
+
+
+<%- include('partials/admin-footer') %>
