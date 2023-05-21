@@ -20,6 +20,6 @@ app.use('/admin/', adminRoutes);
 
 // app.use('/api/menu_item', menuItemRoutes);
 
-app.listen(3000, function () {
+app.listen(process.env.PORT || 3000, function () {
   console.log('server is up baby');
 });
