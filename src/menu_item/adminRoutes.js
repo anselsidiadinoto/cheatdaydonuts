@@ -27,9 +27,6 @@ const pgSession = require('connect-pg-simple')(session);
 const pgStoreConfig = {
   connectionString: conString,
   createTableIfMissing: true,
-  ssl: {
-    rejectUnauthorized: false,
-  },
 };
 
 adminRouter.use(

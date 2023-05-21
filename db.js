@@ -5,9 +5,6 @@ const conString = process.env.DATABASE_URL;
 
 const pool = new Pool({
   connectionString: conString,
-  ssl: {
-    rejectUnauthorized: false,
-  },
 });
 
 // const pool = new Pool({
