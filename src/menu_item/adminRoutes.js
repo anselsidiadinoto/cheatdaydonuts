@@ -28,7 +28,12 @@ const pgStoreConfig = {
   connectionString: conString,
   createTableIfMissing: true,
   ssl: true,
-  // ssl: process.env.DATABASE_URL ? true : false,
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  },
 };
 
 adminRouter.use(
