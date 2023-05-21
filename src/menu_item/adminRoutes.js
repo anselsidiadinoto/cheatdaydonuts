@@ -8,36 +8,37 @@ const adminRouter = Router();
 
 // --------------- POSTGRESS SESSION ---------------
 
-// const session = require('express-session');
-// require('dotenv').config({ path: __dirname + '/../../.env' });
+const session = require('express-session');
+require('dotenv').config({ path: __dirname + '/../../.env' });
 
-// const pgSessionConnectionObj = {
-//   user: process.env.DB_USER,
-//   host: process.env.DB_HOST,
-//   database: process.env.DB_DATABASE,
-//   password: process.env.DB_PASSWORD,
-// };
+const pgSessionConnectionObj = {
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_DATABASE,
+  password: process.env.DB_PASSWORD,
+};
 
-// console.log(pgSessionConnectionObj);
+console.log(pgSessionConnectionObj);
 
-// // const conString = process.env.CONNECTION_STRING;
-// // const pgSessionConnectionObj = conString;
+// const conString = process.env.CONNECTION_STRING;
+// const pgSessionConnectionObj = conString;
 
-// const pgSession = require('connect-pg-simple')(session);
-// const pgStoreConfig = {
-//   connectionObject: pgSessionConnectionObj,
-//   createTableIfMissing: true,
-// };
+const pgSession = require('connect-pg-simple')(session);
+const pgStoreConfig = {
+  connectionObject: pgSessionConnectionObj,
+  ssl: true,
+  createTableIfMissing: true,
+};
 
-// adminRouter.use(
-//   session({
-//     store: new pgSession(pgStoreConfig),
-//     secret: 'cat keyboard',
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }, // 30 days
-//   })
-// );
+adminRouter.use(
+  session({
+    store: new pgSession(pgStoreConfig),
+    secret: 'cat keyboard',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }, // 30 days
+  })
+);
 
 // --------------- PASSPORT AUTHENTICATION -------------
 const passport = require('passport');

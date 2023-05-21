@@ -3,8 +3,6 @@ const adminRoutes = require('./src/menu_item/adminRoutes');
 const orderRoutes = require('./src/order_item/orderRoutes');
 const bodyParser = require('body-parser');
 
-const session = require('express-session');
-
 const app = express();
 
 app.use(express.static(__dirname + '/public'));
