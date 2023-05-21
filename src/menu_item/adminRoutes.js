@@ -42,6 +42,7 @@ adminRouter.use(
     secret: 'cat keyboard',
     resave: false,
     saveUninitialized: true,
+    proxy: true,
     cookie: { maxAge: 30 * 24 * 60 * 60 * 1000, secure: true }, // 30 days
   })
 );
