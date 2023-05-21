@@ -16,18 +16,17 @@ const pgSessionConnectionObj = {
   host: process.env.DB_HOST,
   database: process.env.DB_DATABASE,
   password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
 };
 
-console.log(pgSessionConnectionObj);
-
 // const conString = process.env.CONNECTION_STRING;
-// const pgSessionConnectionObj = conString;
+// const pgSessionConnectionObj = conString;ser
 
 const pgSession = require('connect-pg-simple')(session);
 const pgStoreConfig = {
   connectionObject: pgSessionConnectionObj,
-  ssl: true,
   createTableIfMissing: true,
+  ssl: process.env.DATABASE_URL ? true : false,
 };
 
 adminRouter.use(
