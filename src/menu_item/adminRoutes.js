@@ -11,23 +11,24 @@ const adminRouter = Router();
 const session = require('express-session');
 require('dotenv').config({ path: __dirname + '/../../.env' });
 
-const pgSessionConnectionObj = {
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_DATABASE,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
-  ssl: true,
-};
+// const pgSessionConnectionObj = {
+//   user: process.env.DB_USER,
+//   host: process.env.DB_HOST,
+//   database: process.env.DB_DATABASE,
+//   password: process.env.DB_PASSWORD,
+//   port: process.env.DB_PORT,
+//   ssl: true,
+// };
 
-// const conString = process.env.CONNECTION_STRING;
+const conString = process.env.CONNECTION_STRING;
 // const pgSessionConnectionObj = conString;ser
 
 const pgSession = require('connect-pg-simple')(session);
 const pgStoreConfig = {
-  connectionObject: pgSessionConnectionObj,
+  connectionString: conString,
   createTableIfMissing: true,
-  ssl: process.env.DATABASE_URL ? true : false,
+  ssl: true,
+  // ssl: process.env.DATABASE_URL ? true : false,
 };
 
 adminRouter.use(
