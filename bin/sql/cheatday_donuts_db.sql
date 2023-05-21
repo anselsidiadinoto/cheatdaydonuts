@@ -22,8 +22,9 @@ CREATE TABLE menu_item (
     id SERIAL NOT NULL,
     menu_name VARCHAR(255) NOT NULL,
     menu_description TEXT NOT NULL,
-    menu_price DECIMAL(8,0) NOT NULL,
-    menu_img_url TEXT,
+    menu_price BIGINT NOT NULL,
+    menu_img_url TEXT DEFAULT 'https://htmlcolorcodes.com/assets/images/colors/light-gray-color-solid-background-1920x1080.png',
+    menu_img_public_id TEXT,
     id_menu_item_status INT NOT NULL DEFAULT 1,
 
 
@@ -79,7 +80,11 @@ CREATE TABLE dashboard_order_dates (
     CONSTRAINT uc_id_order_dates UNIQUE (id),
     CONSTRAINT pk_id_order_dates PRIMARY KEY (id)
 );
-
+    INSERT INTO dashboard_order_dates(order_dates)
+    VALUES
+        ('Friday, 15 Sept 2023'), 
+        ('Saturday, 16 Sept 2023'), 
+        ('Sunday, 17 Sept 2023');
 
 DROP TABLE IF EXISTS cart CASCADE;
 CREATE TABLE cart (
@@ -87,12 +92,13 @@ CREATE TABLE cart (
     cart_status VARCHAR(255) NOT NULL,
     customer_name VARCHAR(255),
     delivery_address TEXT,
-    phone_number DECIMAL(12,0),
+    phone_number VARCHAR(255),
     email VARCHAR(255),
+    id_delivery_date INT, 
     delivery_date VARCHAR(255),
     delivery_time VARCHAR(255),
     order_notes TEXT,
-    total_price DECIMAL(12,0),
+    total_price BIGINT,
 
 
     CONSTRAINT uc_id_cart UNIQUE (id),
@@ -122,15 +128,16 @@ CREATE TABLE order_cart (
 DROP TABLE IF EXISTS orders_information CASCADE;
 CREATE TABLE orders_information (
     id SERIAL NOT NULL,
-    customer_name VARCHAR(255) NOT NULL,
-    delivery_address TEXT NOT NULL,
-    phone_number BIGINT NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    delivery_date VARCHAR(255) NOT NULL,
-    delivery_time VARCHAR(255) NOT NULL,
+    customer_name VARCHAR(255),
+    delivery_address TEXT,
+    phone_number VARCHAR(255),
+    email VARCHAR(255),
+    id_delivery_date INT,
+    delivery_date VARCHAR(255),
+    delivery_time VARCHAR(255),
     order_notes TEXT,
-    total_price DECIMAL(12,0) NOT NULL,
-    delivery_cost DECIMAL(12,0) DEFAULT 0,
+    total_price DECIMAL(12,0),
+    delivery_cost BIGINT DEFAULT 0,
     order_time TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     id_order_status INT NOT NULL DEFAULT 1, 
 
@@ -138,6 +145,16 @@ CREATE TABLE orders_information (
     CONSTRAINT uc_id_orders_information UNIQUE (id),
     CONSTRAINT pk_id_orders_information PRIMARY KEY (id)
 );
+
+    INSERT INTO orders_information (customer_name, id_delivery_date, delivery_date, delivery_time)
+    VALUES
+        ('Ansel', 2, 'Saturday, 16 Sept 2023', '9:00' ), 
+        ('Joan', 1, 'Friday, 15 Sept 2023', '12:00'), 
+        ('Adrian', 3, 'Sunday, 17 Sept 2023', '10:00'), 
+        ('Gabby', 2, 'Saturday, 16 Sept 2023', '10:00'), 
+        ('Astrid', 1, 'Friday, 15 Sept 2023', '16:00'), 
+        ('Mao', 3, 'Sunday, 17 Sept 2023', '13:00');
+
 
 
 DROP TABLE IF EXISTS order_status CASCADE;
@@ -153,16 +170,44 @@ CREATE TABLE order_status (
         VALUES ('in-progress'), ('completed');
 
 
+DROP TABLE IF EXISTS dashboard_order_sort CASCADE;
+CREATE TABLE dashboard_order_sort (
+    id SERIAL NOT NULL,
+    sort_options VARCHAR(255)
+);
+
+    INSERT INTO dashboard_order_sort (sort_options)
+    VALUES 
+        ('Order time'), ('Delivery time');
+
+
 DROP TABLE IF EXISTS orders_items CASCADE;
 CREATE TABLE orders_items (
     id SERIAL NOT NULL,
     id_order INT NOT NULL,
-    id_menu_item INT NOT NULL,
+    menu_name VARCHAR(255) NOT NULL,
+    menu_id INT NOT NULL,
     quantity INT NOT NULL,
+    menu_price BIGINT NOT NULL,
 
     CONSTRAINT uc_id_orders_items UNIQUE (id),
     CONSTRAINT pk_id_orders_items PRIMARY KEY (id)
 );
+
+    -- INSERT INTO orders_items (id_order, menu_name, menu_id, quantity, menu_price)
+    -- VALUES
+    --     (1, 'Donut Strobery', 1, 5, 15000), 
+    --     (2, 'Donut Coklat', 2, 4, 12000), 
+    --     (2, 'Donut Strobery', 1, 3, 15000), 
+    --     (3, 'Donut Zuchini', 4, 5, 20000), 
+    --     (3, 'Donut Coklat', 2, 4, 12000), 
+    --     (3, 'Donut Melon', 3, 6, 17000), 
+    --     (4, 'Donut Zuchini', 4, 4, 20000), 
+    --     (5, 'Donut Coklat', 2, 1, 12000), 
+    --     (5, 'Donut Melon', 3, 4, 17000), 
+    --     (6, 'Donut Coklat', 2, 2, 12000), 
+    --     (6, 'Donut Melon', 3, 4, 17000), 
+    --     (6, 'Donut Strobery', 1, 5, 15000);
 
 ALTER TABLE menu_item ADD CONSTRAINT fk_id_menu_item_status 
     FOREIGN KEY(id_menu_item_status) 
@@ -180,9 +225,6 @@ ALTER TABLE orders_information ADD CONSTRAINT fk_id_order_status
     FOREIGN KEY(id_order_status)
     REFERENCES order_status(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE orders_items ADD CONSTRAINT fk_id_order_item
-    FOREIGN KEY(id_menu_item)
-    REFERENCES menu_item (id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER DATABASE cheatday_donuts SET TIMEZONE TO 'Singapore';
 
@@ -203,14 +245,13 @@ CREATE VIEW order_items_review AS
 CREATE VIEW admin_order_items AS
     SELECT
     orders_items.id_order,
-    menu_item.menu_name,
-    menu_item.id,
+    orders_items.menu_name,
+    orders_items.menu_id,
     orders_items.quantity,
-    menu_item.menu_price,
+    orders_items.menu_price AS menu_price,
     menu_price * quantity AS each_subtotal
     
-    FROM orders_items JOIN menu_item
-    ON orders_items.id_menu_item = menu_item.id;
+    FROM orders_items;
 
 CREATE VIEW admin_orders AS
     SELECT 
@@ -220,17 +261,28 @@ CREATE VIEW admin_orders AS
     orders_information.phone_number,
     orders_information.email,
     orders_information.delivery_date,
+    orders_information.id_delivery_date AS date_value,
     orders_information.delivery_time,
     orders_information.order_notes,
     orders_information.total_price,
     total_price + delivery_cost AS final_price,
     orders_information.delivery_cost,
     to_char(orders_information.order_time, 'Dy DD-MM-YYYY HH24:MI') AS order_time,
-    orders_information.id_order_status
+    orders_information.id_order_status AS status_id
 
     FROM orders_information;
 
+CREATE VIEW admin_orders_summary AS
+    SELECT
+    admin_orders.id,
+    admin_order_items.menu_id AS item_id,
+    admin_order_items.menu_name,
+    admin_order_items.quantity,
+    admin_orders.status_id
 
+    FROM admin_orders JOIN admin_order_items
+    ON admin_orders.id = admin_order_items.id_order;
+    
 
     
 
