@@ -34,6 +34,7 @@ const pgStoreConfig = {
       rejectUnauthorized: false,
     },
   },
+  secure: true,
 };
 
 adminRouter.use(

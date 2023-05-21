@@ -12,6 +12,7 @@ const pool = new Pool({
       rejectUnauthorized: false,
     },
   },
+  secure: true,
 });
 
 // const pool = new Pool({
