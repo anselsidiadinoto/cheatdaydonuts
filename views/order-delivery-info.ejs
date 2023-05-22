@@ -12,7 +12,7 @@
             <div class="items-layout-quantity">
               <% cartItems.forEach(info => { %>
               <div class="items-order">
-                <div class="item-name">(<%= info.quantity %>) <%= info.menu_name %></div>
+                <div class="item-name">(<%= info.quantity %>) <%= info.menu_name %> - <%= info.menu_price %></div>
                 <div class="item-price"><%= info.each_subtotal %></div>
               </div>
               <% }) %>

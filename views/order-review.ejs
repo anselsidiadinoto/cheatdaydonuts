@@ -13,7 +13,7 @@
             <div class="items-layout-quantity">
               <% orderItems.forEach(info => { %>
               <div class="items-order">
-                <div class="item-name">(<%= info.quantity %>) <%= info.menu_name %></div>
+                <div class="item-name">(<%= info.quantity %>) <%= info.menu_name %> - <%= info.menu_price %></div>
                 <div class="item-price"><%= info.each_subtotal %></div>
                 <input type="hidden" name="item_name" value="<%= info.menu_name %>">
                 <input type="hidden" name="item_id" value="<%= info.id %>">
@@ -71,7 +71,7 @@
             </div>
           </div>
         </div>
-        <div class="right-navigation">
+        <div class="right-navigation right-navigation-mobile-view">
           <button action="submit" class="btn-frame btn-red">
             Send order form
           </button>
