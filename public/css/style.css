@@ -357,6 +357,7 @@ select {
 @media (max-width: 850px) {
   .menu-title {
     display: flex;
+    justify-content: none;
     padding-top: 1rem;
     padding-bottom: 2rem;
     margin-bottom: 1rem;
@@ -381,7 +382,7 @@ select {
 
     outline-style: solid;
     outline-width: 4rem;
-    outline-offset: -3rem;
+    outline-offset: none;
     outline-color: var(--clr-background);
 
     /* background-color: bisque; */
