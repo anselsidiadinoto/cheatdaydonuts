@@ -277,7 +277,7 @@ select {
       'date-info'
       'order-info';
 
-    width: 40rem;
+    width: 35rem;
     margin: 4rem auto 0 auto;
   }
 
@@ -364,7 +364,7 @@ select {
     /* background-color: rgb(129, 174, 174); */
     border: 0 solid var(--clr-text-red);
     border-bottom-width: 0.25rem;
-    width: 40rem;
+    width: 35rem;
 
     margin: 0 auto;
     margin-bottom: 1rem;
@@ -377,7 +377,7 @@ select {
     flex-wrap: none;
     flex-direction: column;
 
-    width: 45rem;
+    width: 40rem;
     margin: 0 auto;
 
     outline-style: solid;
@@ -549,7 +549,7 @@ select {
     display: flex;
     justify-content: space-between;
 
-    margin-left: 3.75rem;
+    margin-left: 2.5rem;
     margin-right: 1rem;
   }
 }
@@ -653,7 +653,7 @@ select {
     padding: 0;
     background-color: #fff;
     border-radius: 1rem;
-    width: 40rem;
+    width: 35rem;
   }
 
   .subtotal-frame {
@@ -697,7 +697,7 @@ select {
     font-size: 2rem;
     font-weight: 300;
     height: 5rem;
-    width: 40rem;
+    width: 35rem;
     position: absolute;
   }
 }
