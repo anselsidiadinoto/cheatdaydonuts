@@ -61,7 +61,7 @@ const isAuth = function (req, res, next) {
   if (req.isAuthenticated()) {
     next();
   } else {
-    res.status(401).json({ msg: 'Who are you ??? pls login' });
+    res.redirect('/admin/');
   }
 };
 
